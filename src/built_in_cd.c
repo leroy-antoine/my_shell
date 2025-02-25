@@ -13,25 +13,8 @@
 #include "../include/my.h"
 #include "../include/src.h"
 
-static int check_if_dir(char *path)
+static char *handle_errors(int return_val, char *path)
 {
-    struct stat is_dir = {0};
-
-    if (path == NULL)
-        return WRONG_COMMAND;
-    if (access(path, F_OK) != 0)
-        return EXIT;
-    stat(path, &is_dir);
-    if (!S_ISDIR(is_dir.st_mode))
-        return ERROR;
-    else
-        return SUCCESS;
-}
-
-static char **cd_with_path(char *path, linked_list_t **my_env, char **env)
-{
-    int return_val = check_if_dir(path);
-
     if (return_val == WRONG_COMMAND)
         return NULL;
     if (return_val == ERROR) {
@@ -44,6 +27,37 @@ static char **cd_with_path(char *path, linked_list_t **my_env, char **env)
         my_putstrd(": No such file or directory.\n");
         return NULL;
     }
+    if (return_val == NO_RIGHTS) {
+        my_putstrd(path);
+        my_putstrd(": Permission denied.\n");
+        return NULL;
+    }
+    return path;
+}
+
+static int check_if_dir(char *path)
+{
+    struct stat is_dir = {0};
+
+    if (path == NULL)
+        return WRONG_COMMAND;
+    if (access(path, F_OK) != 0)
+        return EXIT;
+    stat(path, &is_dir);
+    if ((is_dir.st_mode & S_IRUSR) != S_IRUSR &&
+        (is_dir.st_mode & S_IRGRP) != S_IRGRP)
+        return NO_RIGHTS;
+    if (!S_ISDIR(is_dir.st_mode))
+        return ERROR;
+    return SUCCESS;
+}
+
+static char **cd_with_path(char *path, linked_list_t **my_env, char **env)
+{
+    int return_val = check_if_dir(path);
+
+    if (handle_errors(return_val, path) == NULL)
+        return NULL;
     if (chdir(path) != 0)
         return NULL;
     return env;

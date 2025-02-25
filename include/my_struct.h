@@ -17,6 +17,7 @@
     #define EXIT -2
     #define EMPTY_COMMAND_LINE -678
     #define WRONG_COMMAND 65024
+    #define NO_RIGHTS -67
     #define NO_VAL "                "
     #define HOME "HOME"
     #define PATH "PATH"
