@@ -5,7 +5,6 @@
 ** handle commands
 */
 
-#include <stdbool.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
@@ -14,14 +13,23 @@
 #include "../include/my.h"
 #include "../include/src.h"
 
-static bool is_path(linked_list_t *my_env)
+static void is_path(linked_list_t **my_env)
 {
-    while (my_env != NULL) {
-        if (my_strcmp(my_env->left, "PATH") == 0)
-            return true;
-        my_env = my_env->next;
+    linked_list_t *tmp = (*my_env);
+
+    while (tmp->next != NULL) {
+        if (my_strcmp(tmp->left, "PATH") == 0)
+            return;
+        tmp = tmp->next;
     }
-    return false;
+    if (my_strcmp(tmp->left, "PATH") == 0)
+        return;
+    tmp->next = malloc(sizeof(linked_list_t));
+    if (tmp->next == NULL)
+        return;
+    tmp->next->left = my_strdup(PATH);
+    tmp->next->right = my_strdup(PATH_VAR);
+    tmp->next->next = NULL;
 }
 
 static int print_error(char *command, char **env)
@@ -49,9 +57,8 @@ static int exec_command(char **command, char **env)
     int signal = 0;
 
     id = fork();
-    if (id == 0) {
+    if (id == 0)
         exit(execute_command(command, env));
-    }
     if (id > 0) {
         waitpid(id, &signal, 0);
         if (signal == SYS_SEG) {
@@ -69,18 +76,19 @@ int find_command(char **infos, linked_list_t **my_env)
 {
     int command_return = 0;
     int is_in_list = -1;
-    char **env = create_env_from_list(my_env);
+    char **env = NULL;
 
-    for (int i = 0; func[i].key[0] != '\0'; i++) {
+    is_path(my_env);
+    env = create_env_from_list(my_env);
+    for (int i = 0; func[i].key[0] != '\0'; i++)
         if (my_strcmp(infos[0], func[i].key) == 0) {
             is_in_list = i;
             break;
         }
-    }
-    if (is_in_list != -1 && is_path((*my_env)))
+    if (is_in_list != -1)
         if (func[is_in_list].func(infos, env, my_env) == NULL)
             return ERROR;
-    if (is_in_list == -1 && is_path((*my_env)))
+    if (is_in_list == -1)
         command_return = exec_command(infos, env);
     if (env == NULL)
         return ERROR;

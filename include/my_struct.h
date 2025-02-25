@@ -19,6 +19,8 @@
     #define WRONG_COMMAND 65024
     #define NO_VAL "                "
     #define HOME "HOME"
+    #define PATH "PATH"
+    #define PATH_VAR "/usr/bin"
     #include <stddef.h>
 
 typedef struct linked_list_s {

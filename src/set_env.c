@@ -5,6 +5,7 @@
 ** set env
 */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/my_struct.h"
@@ -92,17 +93,46 @@ static char **find_which_exec(char **command, char **env,
     return NULL;
 }
 
+static int check_alphanumeric(char *command)
+{
+    bool is_valid = false;
+
+    if ((command[0] >= 'A' && command[0] <= 'Z') ||
+        (command[0] >= 'a' && command[0] <= 'z') ||
+        command[0] == '_')
+        is_valid = true;
+    if (!is_valid)
+        return EXIT;
+    for (int i = 1; command[i] != '\0'; i++) {
+        if ((command[i] >= 'A' && command[i] <= 'Z') ||
+            (command[i] >= 'a' && command[i] <= 'z'))
+            continue;
+        if (command[i] >= '0' && command[i] <= '9')
+            continue;
+        if (command[i] == '.' || command[i] == '_')
+            continue;
+        return ERROR;
+    }
+    return SUCCESS;
+}
+
 static char **check_validity(char **command, int len_command)
 {
+    int return_val = 0;
+
     if (len_command > 3) {
         my_putstrd("setenv: Too many arguments.\n");
         return NULL;
     }
     if (len_command > 1) {
-        if ((command[1][0] >= 'A' && command[1][0] <= 'Z') ||
-            (command[1][0] >= 'a' && command[1][0] <= 'z'))
+        return_val = check_alphanumeric(command[1]);
+        if (return_val == SUCCESS)
             return command;
-        my_putstrd("setenv: Variable name must begin with a letter.\n");
+        if (return_val == EXIT)
+            my_putstrd("setenv: Variable name must begin with a letter.\n");
+        if (return_val == ERROR)
+            my_putstrd("setenv: Variable name must "
+            "contain alphanumeric characters.\n");
         return NULL;
     }
     return command;
