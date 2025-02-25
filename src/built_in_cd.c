@@ -23,33 +23,33 @@ static int change_dir(char *right)
     return SUCCESS;
 }
 
-static char **cd_home(linked_list_t **env, char **return_val)
+static char **cd_home(linked_list_t *env, char **return_val)
 {
     char *home = my_strdup(HOME);
     int error = 0;
 
-    while ((*env)->next != NULL) {
-        if (my_strcmp((*env)->left, home) == 0) {
-            error = change_dir((*env)->right);
+    while (env->next != NULL) {
+        if (my_strcmp(env->left, home) == 0) {
+            error = change_dir(env->right);
             break;
         }
-        (*env) = (*env)->next;
+        env = env->next;
     }
-    if (my_strcmp((*env)->left, home) == 0)
-        change_dir((*env)->right);
-    (*env) = (*env)->head;
+    if (my_strcmp(env->left, home) == 0)
+        change_dir(env->right);
     free(home);
     if (error != 0)
         return NULL;
-    return NULL;
+    return return_val;
 }
 
 char **built_in_cd(char **command, char **env, linked_list_t **my_env)
 {
     int argc = size_command(command);
+    linked_list_t *tmp = (*my_env);
 
     if (argc == 1)
-        return cd_home(my_env, env);
+        return cd_home(tmp, env);
     if (argc > 1)
         return NULL;
     return NULL;

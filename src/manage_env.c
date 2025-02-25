@@ -24,7 +24,7 @@ static bool is_path(linked_list_t *my_env)
 }
 
 static void concatenate_copy(char **to_copy, char *left,
-    char *right, char **env)
+    char *right)
 {
     my_strcpy((*to_copy), left);
     my_strcat((*to_copy), "=");
@@ -54,14 +54,12 @@ char **create_env_from_list(linked_list_t **my_env)
     char **env = malloc(sizeof(char *) * (size_list + 1));
     char *to_copy = NULL;
 
-    if (env == NULL)
-        return NULL;
-    if (!is_path(*(my_env)))
+    if (env == NULL || size_list == EXIT || !is_path(*(my_env)))
         return NULL;
     for (int i = 0; i < size_list; i++) {
         if (alocate_mem(&to_copy, tmp) == NULL)
             return NULL;
-        concatenate_copy(&to_copy, tmp->left, tmp->right, &env[i]);
+        concatenate_copy(&to_copy, tmp->left, tmp->right);
         env[i] = my_strdup(to_copy);
         free(to_copy);
         if (env[i] == NULL)

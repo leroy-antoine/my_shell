@@ -17,7 +17,7 @@ static void check_tty(void)
     int fd = STDIN_FILENO;
 
     if (isatty(fd) == 1)
-        my_putstr("\x1b[35m <my_shell> \x1b[0m");
+        my_putstr("\x1b[35m < O_O > \x1b[0m");
 }
 
 static void free_everything(char **command)

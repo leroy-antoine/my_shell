@@ -5,6 +5,7 @@
 ** unset env
 */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -25,12 +26,11 @@ static linked_list_t *check_duplicate(linked_list_t *tmp, char **command)
     return tmp;
 }
 
-static void free_first_elem(char **command, linked_list_t **my_env)
+static bool free_first_elem(char **command, linked_list_t **my_env)
 {
     linked_list_t *tmp = NULL;
+    bool is_deleted = false;
 
-    if (my_env == NULL)
-        return;
     for (int i = 0; command[i] != NULL; i++) {
         tmp = (*my_env);
         if (my_strcmp(command[i], tmp->left) == 0) {
@@ -38,19 +38,21 @@ static void free_first_elem(char **command, linked_list_t **my_env)
             free(tmp->left);
             free(tmp->right);
             free(tmp);
+            is_deleted = true;
             break;
         }
     }
+    return is_deleted;
 }
 
-static linked_list_t **delete_var(char **command, char **env,
-    linked_list_t **my_env)
+static linked_list_t **delete_var(char **command, linked_list_t **my_env)
 {
     linked_list_t *tmp = (*my_env);
 
     if (tmp == NULL)
         return NULL;
-    free_first_elem(command, &tmp);
+    if (free_first_elem(command, my_env))
+        return my_env;
     while (tmp != NULL) {
         tmp = check_duplicate(tmp, command);
         tmp = tmp->next;
@@ -68,6 +70,6 @@ char **unset_env(char **command, char **env, linked_list_t **my_env)
         my_putstrd("unsetenv: Too few arguments.\n");
         return NULL;
     }
-    delete_var(command, env, my_env);
+    delete_var(command, my_env);
     return env;
 }
