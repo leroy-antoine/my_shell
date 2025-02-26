@@ -31,19 +31,21 @@ NAME    =	mysh
 
 LIB	=	make -C lib/my/
 
-CPPFLAGS += -iquote./include
+CPPFLAGS += -L lib/my/ -lmy -iquote./include
 
 CFLAGS += -Wall -Wextra
 
-VALGRIND = -g3
+DEBUG = -g3
 
-all:	$(OBJ)
-	$(LIB)
-	$(CC)  -o $(NAME) $(SRC) -L lib/my/ -lmy $(CPPFLAGS)
+all:	$(NAME)
 
-val:	$(OBJ)
+$(NAME): $(OBJ)
 	$(LIB)
-	$(CC) -o $(NAME) $(VALGRIND) $(CFLAGS) $(SRC) -L lib/my/ -lmy $(CPPFLAGS)
+	$(CC) -o $(NAME) $(SRC) $(CPPFLAGS)
+
+debug:	$(OBJ)
+	$(LIB)
+	$(CC) -o $(NAME) $(DEBUG) $(CFLAGS) $(SRC) $(CPPFLAGS)
 clean:
 	make clean -C lib/my/
 	$(RM) $(OBJ)
