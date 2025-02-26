@@ -14,10 +14,12 @@
     #define ERROR_LS 2
     #define ERROR_SHELL 127
     #define SIGNAL_ERR 512
+    #define BUFF_SIZE 500
     #define EXIT -2
     #define EMPTY_COMMAND_LINE -678
     #define WRONG_COMMAND 65024
     #define NO_RIGHTS -67
+    #define PWD "PWD"
     #define NO_VAL "                "
     #define HOME "HOME"
     #define PATH "PATH"

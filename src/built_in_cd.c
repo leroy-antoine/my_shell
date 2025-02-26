@@ -13,6 +13,29 @@
 #include "../include/my.h"
 #include "../include/src.h"
 
+static void change_pwd(linked_list_t **env)
+{
+    char new_pwd[BUFF_SIZE];
+    linked_list_t *tmp = (*env);
+
+    if (getcwd(new_pwd, BUFF_SIZE) == NULL)
+        return;
+    while (tmp != NULL) {
+        if (my_strcmp(tmp->left, PWD) == 0) {
+            free(tmp->right);
+            tmp->right = my_strdup(new_pwd);
+            break;
+        }
+        tmp = tmp->next;
+    }
+    tmp = malloc(sizeof(linked_list_t));
+    if (tmp == NULL)
+        return;
+    tmp->next = NULL;
+    tmp->left = my_strdup(PWD);
+    tmp->right = my_strdup(new_pwd);
+}
+
 static char *handle_errors(int return_val, char *path)
 {
     if (return_val == WRONG_COMMAND)
@@ -60,6 +83,7 @@ static char **cd_with_path(char *path, linked_list_t **my_env, char **env)
         return NULL;
     if (chdir(path) != 0)
         return NULL;
+    change_pwd(my_env);
     return env;
 }
 
