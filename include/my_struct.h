@@ -12,18 +12,19 @@
     #define SUCCESS 0
     #define SYS_SEG 139
     #define ERROR_LS 2
+    #define WRONG 1
     #define ERROR_SHELL 127
     #define SIGNAL_ERR 512
-    #define BUFF_SIZE 500
+    #define BUFF_SIZE 512
     #define EXIT -2
     #define EMPTY_COMMAND_LINE -678
-    #define WRONG_COMMAND 65024
+    #define WRONG_COMMAND 32512
     #define NO_RIGHTS -67
     #define PWD "PWD"
     #define NO_VAL "                "
     #define HOME "HOME"
     #define PATH "PATH"
-    #define PATH_VAR "/usr/bin"
+    #define PATH_VAR "/usr/bin:/bin"
     #include <stddef.h>
 
 typedef struct linked_list_s {

@@ -17,6 +17,8 @@ static void is_path(linked_list_t **my_env)
 {
     linked_list_t *tmp = (*my_env);
 
+    if (tmp == NULL)
+        return;
     while (tmp->next != NULL) {
         if (my_strcmp(tmp->left, "PATH") == 0)
             return;
@@ -37,7 +39,7 @@ static int print_error(char *command, char **env)
     my_putstrd(command);
     my_putstrd(": Command not found.\n");
     free_env(env);
-    return ERROR_SHELL;
+    return WRONG;
 }
 
 static int find_return_val(int signal, char *command, char **env)
@@ -48,7 +50,7 @@ static int find_return_val(int signal, char *command, char **env)
         if (signal == SIGNAL_ERR)
             return ERROR_LS;
     }
-    return ERROR;
+    return SUCCESS;
 }
 
 static int exec_command(char **command, char **env)

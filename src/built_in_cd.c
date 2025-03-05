@@ -64,14 +64,14 @@ static int check_if_dir(char *path)
 
     if (path == NULL)
         return WRONG_COMMAND;
+    stat(path, &is_dir);
+    if (!S_ISDIR(is_dir.st_mode))
+        return ERROR;
     if (access(path, F_OK) != 0)
         return EXIT;
-    stat(path, &is_dir);
     if ((is_dir.st_mode & S_IRUSR) != S_IRUSR &&
         (is_dir.st_mode & S_IRGRP) != S_IRGRP)
         return NO_RIGHTS;
-    if (!S_ISDIR(is_dir.st_mode))
-        return ERROR;
     return SUCCESS;
 }
 
@@ -100,19 +100,17 @@ static int change_dir(char *right)
 
 static char **cd_home(linked_list_t *env, char **return_val)
 {
-    char *home = my_strdup(HOME);
     int error = 0;
 
     while (env->next != NULL) {
-        if (my_strcmp(env->left, home) == 0) {
+        if (my_strcmp(env->left, HOME) == 0) {
             error = change_dir(env->right);
             break;
         }
         env = env->next;
     }
-    if (my_strcmp(env->left, home) == 0)
+    if (my_strcmp(env->left, HOME) == 0)
         change_dir(env->right);
-    free(home);
     if (error != 0)
         return NULL;
     return return_val;

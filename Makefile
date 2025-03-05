@@ -63,6 +63,7 @@ fclean: clean
 	$(RM) $(NAME)
 	$(RM) ./lib/my/libmy.a
 	$(RM) libmy.a
+	clear
 
 re:	fclean all
 

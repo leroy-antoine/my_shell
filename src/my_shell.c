@@ -39,8 +39,6 @@ static int get_input(char *command, size_t line,
             check_tty();
             continue;
         }
-        if (command[0] == '\n')
-            continue;
         infos = parse_commands(command);
         if (infos == NULL)
             return ERROR;
