@@ -39,7 +39,8 @@ SRC	=	my_putstrd.c			\
 		my_strstr.c			\
 		my_strupcase.c			\
 		my_swap.c			\
-		my_str_to_word_array.c
+		my_str_to_word_array.c	\
+		list_len.c
 
 OBJ     =       $(SRC:.c=.o)
 

@@ -8,9 +8,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "../include/my_struct.h"
-#include "../include/my.h"
-#include "../include/src.h"
+#include "my_struct.h"
+#include "my.h"
+#include "src.h"
+#include "tree.h"
 
 static void check_tty(void)
 {
@@ -44,7 +45,7 @@ static int get_input(char *command, size_t line,
             return ERROR;
         if (my_strcmp(infos[0], "exit") == 0)
             break;
-        return_val = find_command(infos, env);
+        return_val = conditional_exec(infos, env);
         check_tty();
         free_everything(infos);
     }

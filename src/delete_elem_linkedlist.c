@@ -8,10 +8,7 @@
 
 
 #include <stdlib.h>
-
-#include "../include/my_struct.h"
-#include "../include/src.h"
-#include "../include/my.h"
+#include "my_struct.h"
 
 linked_list_t *delete_elem(linked_list_t *elem, linked_list_t *next)
 {

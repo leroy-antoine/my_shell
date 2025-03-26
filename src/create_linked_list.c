@@ -6,12 +6,10 @@
 */
 
 #include <stdio.h>
-#include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "../include/my_struct.h"
-#include "../include/my.h"
+#include "my_struct.h"
+#include "my.h"
 
 static linked_list_t *fill_node(linked_list_t *my_env, char **env, int i)
 {

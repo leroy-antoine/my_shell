@@ -9,11 +9,11 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/my_struct.h"
-#include "../include/my.h"
-#include "../include/src.h"
+#include "my_struct.h"
+#include "my.h"
+#include "src.h"
 
-static void is_path(linked_list_t **my_env)
+void is_there_path(linked_list_t **my_env)
 {
     linked_list_t *tmp = (*my_env);
 
@@ -44,13 +44,9 @@ static int print_error(char *command, char **env)
 
 static int find_return_val(int signal, char *command, char **env)
 {
-    if (signal == WRONG_COMMAND)
+    if (signal == WRONG_COMMAND || signal == WRONG_COMMAND_SIGNAL)
         return print_error(command, env);
-    if (my_strcmp(command, "ls") == 0) {
-        if (signal == SIGNAL_ERR)
-            return ERROR_LS;
-    }
-    return SUCCESS;
+    return return_val(signal);
 }
 
 static int exec_command(char **command, char **env)
@@ -63,10 +59,6 @@ static int exec_command(char **command, char **env)
         exit(execute_command(command, env));
     if (id > 0) {
         waitpid(id, &signal, 0);
-        if (signal == SYS_SEG) {
-            mini_printf("Segmentation fault (core dumped)\n");
-            return SYS_SEG;
-        }
         return find_return_val(signal, command[0], env);
     }
     if (id == -1)
@@ -77,20 +69,20 @@ static int exec_command(char **command, char **env)
 int find_command(char **infos, linked_list_t **my_env)
 {
     int command_return = 0;
-    int is_in_list = -1;
+    int is_in_list = ISNT_IN_LIST;
     char **env = NULL;
 
-    is_path(my_env);
+    is_there_path(my_env);
     env = create_env_from_list(my_env);
     for (int i = 0; func[i].key[0] != '\0'; i++)
         if (my_strcmp(infos[0], func[i].key) == 0) {
             is_in_list = i;
             break;
         }
-    if (is_in_list != -1)
+    if (is_in_list != ISNT_IN_LIST)
         if (func[is_in_list].func(infos, env, my_env) == NULL)
             return ERROR;
-    if (is_in_list == -1)
+    if (is_in_list == ISNT_IN_LIST)
         command_return = exec_command(infos, env);
     if (env == NULL)
         return ERROR;

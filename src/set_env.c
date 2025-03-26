@@ -8,9 +8,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/my_struct.h"
-#include "../include/my.h"
-#include "../include/src.h"
+#include "my_struct.h"
+#include "my.h"
+#include "src.h"
 
 static linked_list_t **fill_env(linked_list_t *tmp, linked_list_t **my_env,
     char *left, char *right)

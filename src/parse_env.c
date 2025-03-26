@@ -10,9 +10,9 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "../include/my_struct.h"
-#include "../include/my.h"
-#include "../include/src.h"
+#include "my_struct.h"
+#include "my.h"
+#include "src.h"
 
 static char *create_path(char **to_test, char *token, char *to_find)
 {

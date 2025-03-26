@@ -8,9 +8,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "../include/my.h"
-#include "../include/my_struct.h"
-#include "../include/src.h"
+#include "my.h"
+#include "my_struct.h"
+#include "src.h"
 
 static char *init_find(char **command)
 {

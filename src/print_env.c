@@ -6,8 +6,8 @@
 */
 
 #include <unistd.h>
-#include "../include/my_struct.h"
-#include "../include/my.h"
+#include "my_struct.h"
+#include "my.h"
 
 char **print_env(__attribute_maybe_unused__ char **command,
     char **my_env, linked_list_t **env)

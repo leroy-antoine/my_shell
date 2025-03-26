@@ -7,7 +7,9 @@
 
 #ifndef SRC_H
     #define SRC_H
+    #include <stdbool.h>
 
+int return_val(int signal);
 char **parse_commands(char *command);
 int exec_cat(char **command, char **env);
 int execute_command(char **command, char **env);

@@ -6,7 +6,6 @@
 */
 
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,7 +27,19 @@ static int size_word(char const *buff, char const *delim)
     return index;
 }
 
-static int count_words(char const *buff, char const *delim)
+static int len_stay(const char *buff, char c)
+{
+    int i = 0;
+
+    while (buff[i] != '\0' && buff[i] != c)
+        i++;
+    if (buff[i] == c)
+        i++;
+    return i;
+}
+
+static int count_words(char const *buff, char const *delim,
+    const char *stay)
 {
     int nb_words = 0;
 
@@ -37,6 +48,11 @@ static int count_words(char const *buff, char const *delim)
     while (*buff != '\0') {
         if (is_it_delim(*buff, delim)) {
             buff++;
+            continue;
+        }
+        if (is_it_delim(*buff, stay)) {
+            buff += len_stay(&buff[1], *buff) + 1;
+            nb_words++;
             continue;
         }
         buff += size_word(buff, delim);
@@ -60,7 +76,23 @@ static char *fill_index(char const *buff, char const *delim, int len)
     return index;
 }
 
-static char **fill_array(char const *buff, char const *delim, char **array)
+static char *duplicate_stay(char const *buff, char c)
+{
+    char *str = malloc(len_stay(buff, c) + 1);
+    int i = 0;
+
+    if (str == NULL)
+        return NULL;
+    while (buff[i] != '\0' && buff[i] != c) {
+        str[i] = buff[i];
+        i++;
+    }
+    str[i] = '\0';
+    return str;
+}
+
+static char **fill_array(char const *buff, char const *delim,
+    const char *stay, char **array)
 {
     int index = 0;
     int len = 0;
@@ -70,25 +102,31 @@ static char **fill_array(char const *buff, char const *delim, char **array)
             buff++;
             continue;
         }
+        if (is_it_delim(*buff, stay) == true) {
+            array[index] = duplicate_stay(&buff[1], *buff);
+            buff += len_stay(&buff[1], *buff) + 1;
+            index++;
+            continue;
+        }
         len = size_word(buff, delim);
         array[index] = fill_index(buff, delim, len);
         buff += len;
         index += 1;
     }
-    array[index] = NULL;
     return array;
 }
 
-char **my_str_to_word_array(char const *buff, char const *delim)
+char **my_str_to_word_array(char const *buff, char const *delim,
+    const char *stay)
 {
-    int nb_words = count_words(buff, delim);
+    int nb_words = count_words(buff, delim, stay);
     char **array = NULL;
 
-    if (nb_words == - 1)
+    if (nb_words == - 1 || buff == NULL)
         return NULL;
     array = malloc(sizeof(char *) * (nb_words + 1));
     if (array == NULL)
         return NULL;
     array[nb_words] = NULL;
-    return fill_array(buff, delim, array);
+    return fill_array(buff, delim, stay, array);
 }

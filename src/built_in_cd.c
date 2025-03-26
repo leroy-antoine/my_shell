@@ -9,9 +9,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "../include/my_struct.h"
-#include "../include/my.h"
-#include "../include/src.h"
+#include "my_struct.h"
+#include "my.h"
+#include "src.h"
 
 static void change_pwd(linked_list_t **env)
 {

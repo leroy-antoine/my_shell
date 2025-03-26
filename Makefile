@@ -7,6 +7,8 @@
 
 CC 	?=	gcc
 
+INCLUDE_DIR = include
+
 SRC	=	src/delete_elem_linkedlist.c	\
 		src/size_command.c				\
 		src/print_env.c					\
@@ -24,6 +26,24 @@ SRC	=	src/delete_elem_linkedlist.c	\
 		src/set_env.c					\
 		src/parse_env.c					\
 		src/command.c					\
+		src/return_val.c				\
+		src/parser_ll/binary_tree.c			\
+		src/parser_ll/conditionnal_exec.c	\
+		src/parser_ll/double_left.c		\
+		src/parser_ll/is_double_right.c	\
+		src/parser_ll/is_left.c			\
+		src/parser_ll/is_pipe.c			\
+		src/parser_ll/is_right.c		\
+		src/parser_ll/is_semicolon.c	\
+		src/exec_biary_tree/exec_binary_tree.c		\
+		src/exec_biary_tree/double_left_exec.c 		\
+		src/exec_biary_tree/double_right_exec.c		\
+		src/exec_biary_tree/left_exec.c       		\
+		src/exec_biary_tree/pipe_exec.c        		\
+		src/exec_biary_tree/right_exec.c       		\
+		src/exec_biary_tree/semicolon_exec.c   		\
+		src/exec_biary_tree/find_the_delim.c		\
+		src/exec_biary_tree/copy_arr.c				\
 
 OBJ     =   $(SRC:.c=.o)
 
@@ -31,7 +51,7 @@ NAME    =	mysh
 
 LIB	=	make -C lib/my/
 
-CPPFLAGS += -L lib/my/ -lmy -iquote./include
+CPPFLAGS += -L lib/my/ -lmy -iquote ./$(INCLUDE_DIR)
 
 CFLAGS += -Wall -Wextra
 

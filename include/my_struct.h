@@ -8,9 +8,9 @@
 
 #ifndef MY_STRUCT
     #define MY_STRUCT
+    #define ISNT_IN_LIST -1
     #define ERROR 84
     #define SUCCESS 0
-    #define SYS_SEG 139
     #define ERROR_LS 2
     #define WRONG 1
     #define ERROR_SHELL 127
@@ -19,6 +19,7 @@
     #define EXIT -2
     #define EMPTY_COMMAND_LINE -678
     #define WRONG_COMMAND 32512
+    #define WRONG_COMMAND_SIGNAL 65024
     #define NO_RIGHTS -67
     #define PWD "PWD"
     #define NO_VAL "                "
@@ -59,4 +60,5 @@ find_command(char **infos, linked_list_t **my_env);
 int find_size_list(linked_list_t *head);
 char **manage_env(linked_list_t **head);
 linked_list_t *delete_elem(linked_list_t *elem, linked_list_t *elem_next);
+void is_there_path(linked_list_t **my_env);
 #endif /* MY_STRUCT */

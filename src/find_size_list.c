@@ -5,9 +5,7 @@
 ** find the size of a linked list
 */
 
-#include <stdio.h>
-
-#include "../include/my_struct.h"
+#include "my_struct.h"
 
 int find_size_list(linked_list_t *head)
 {

@@ -10,9 +10,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "../include/my_struct.h"
-#include "../include/my.h"
-#include "../include/src.h"
+#include "my_struct.h"
+#include "my.h"
+#include "src.h"
 
 static linked_list_t *check_duplicate(linked_list_t *tmp, char **command)
 {

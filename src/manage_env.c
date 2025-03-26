@@ -8,8 +8,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/my.h"
-#include "../include/my_struct.h"
+#include "my.h"
+#include "my_struct.h"
 
 static bool is_path(linked_list_t *my_env)
 {

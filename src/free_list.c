@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "../include/my_struct.h"
+#include "my_struct.h"
 
 void free_list(linked_list_t **head)
 {
