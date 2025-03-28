@@ -10,7 +10,8 @@
 
 int main(int, char **, char **env)
 {
-    if (env == NULL)
+    if (env == NULL || env[0] == NULL ||
+        env[0][0] == '\0')
         return ERROR;
     return my_shell(env);
 }

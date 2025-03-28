@@ -44,12 +44,13 @@ static int find_index(tree_t *tree, int index)
     return index;
 }
 
-static int pipe_right(tree_t *tree, char **env, const int index,
+static int pipe_right(tree_t *tree, linked_list_t **env, const int index,
     int *fd)
 {
     int new_index = find_index(tree, (index + 1));
     char **arr = copy_arr(tree->infos, index, true, new_index);
     int signal = 0;
+    char **new_env = create_env_from_list(env);
     int id = 0;
 
     if (arr == NULL)
@@ -57,32 +58,33 @@ static int pipe_right(tree_t *tree, char **env, const int index,
     id = fork();
     if (id == 0) {
         dup2(fd[0], STDIN_FILENO);
-        exit(execute_command(arr, env));
+        exit(find_which_exec(env, arr, new_env));
     } else {
         close(fd[0]);
         waitpid(id, &signal, 0);
     }
     free_env(arr);
+    free_env(new_env);
     return return_val(signal);
 }
 
-static int pipe_left(tree_t *tree, char **env, int index)
+static int pipe_left(tree_t *tree, linked_list_t **env, int index)
 {
     int id = 0;
-    int signal = 0;
     char **arr = copy_arr(tree->infos, index, false, 0);
+    char **new_env = create_env_from_list(env);
     int fd[2] = {0};
 
-    if (arr == NULL)
+    if (arr == NULL || new_env == NULL)
         return ERROR;
     pipe(fd);
     id = fork();
     if (id == 0) {
         dup2(fd[1], STDOUT_FILENO);
-        exit(execute_command(arr, env));
+        exit(find_which_exec(env, arr, new_env));
     } else {
         close(fd[1]);
-        waitpid(id, &signal, 0);
+        free_env(new_env);
         free_env(arr);
         return pipe_right(tree, env, index, fd);
     }
@@ -92,16 +94,14 @@ int pipe_exec(tree_t *tree, linked_list_t **my_env)
 {
     int return_value = 0;
     int index = 0;
-    char **env = create_env_from_list(my_env);
 
-    if (env == NULL || handle_error(tree->infos))
+    if (handle_error(tree->infos))
         return ERROR;
     while (tree->infos[index] != NULL &&
         my_strcmp(tree->infos[index], "|") != 0)
         index++;
-    return_value = pipe_left(tree, env, index);
+    return_value = pipe_left(tree, my_env, index);
     exec_binary_tree(tree->left, my_env);
     exec_binary_tree(tree->right, my_env);
-    free_env(env);
     return return_value;
 }

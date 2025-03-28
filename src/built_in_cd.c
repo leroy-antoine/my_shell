@@ -102,6 +102,8 @@ static char **cd_home(linked_list_t *env, char **return_val)
 {
     int error = 0;
 
+    if (env == NULL)
+        return NULL;
     while (env->next != NULL) {
         if (my_strcmp(env->left, HOME) == 0) {
             error = change_dir(env->right);

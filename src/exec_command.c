@@ -39,7 +39,7 @@ int execute_command(char **command, char **env)
     if (execve(to_exec, &command[0], env) == -1) {
         to_find = NULL;
         free(to_find);
-        return (ERROR_SHELL);
+        return ERROR_SHELL;
     }
     return SUCCESS;
 }

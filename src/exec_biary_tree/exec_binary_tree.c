@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include <unistd.h>
-
 #include "tree.h"
 #include "my_struct.h"
 

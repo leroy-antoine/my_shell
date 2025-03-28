@@ -48,6 +48,8 @@ linked_list_t *create_linked_list(linked_list_t **my_env, char **env)
 {
     linked_list_t *tmp = NULL;
 
+    if (env == NULL)
+        return NULL;
     (*my_env) = malloc(sizeof(linked_list_t));
     if ((*my_env) == NULL)
         return NULL;

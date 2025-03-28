@@ -43,7 +43,9 @@ static linked_list_t **add_to_list(char *left, char *right,
 {
     linked_list_t *tmp = (*my_env);
 
-    while (tmp->next != NULL) {
+    if (tmp == NULL || my_env == NULL)
+        return NULL;
+    while (tmp != NULL && tmp->next != NULL) {
         if (my_strcmp(tmp->left, left) == 0)
             return replace_value(right, tmp, my_env);
         tmp = tmp->next;

@@ -25,6 +25,7 @@ SRC	=	src/delete_elem_linkedlist.c	\
 		src/unset_env.c					\
 		src/set_env.c					\
 		src/parse_env.c					\
+		src/is_delim.c					\
 		src/command.c					\
 		src/return_val.c				\
 		src/parser_ll/binary_tree.c			\
@@ -44,6 +45,9 @@ SRC	=	src/delete_elem_linkedlist.c	\
 		src/exec_biary_tree/semicolon_exec.c   		\
 		src/exec_biary_tree/find_the_delim.c		\
 		src/exec_biary_tree/copy_arr.c				\
+		src/exec_biary_tree/check_builtins.c		\
+		src/exec_biary_tree/parse_array.c			\
+		src/exec_biary_tree/right_redirections.c
 
 OBJ     =   $(SRC:.c=.o)
 

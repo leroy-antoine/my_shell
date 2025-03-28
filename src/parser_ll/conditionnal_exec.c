@@ -6,7 +6,6 @@
 */
 
 #include <stdbool.h>
-
 #include "my_struct.h"
 #include "tree.h"
 
