@@ -28,30 +28,30 @@ Setup Instructions
 
 Clone the repository:
 
-git clone https://github.com/yourusername/my_shell.git
+- git clone git@github.com:leroy-antoine/my_shell.git
 
 
 Navigate to the project directory:
 
-cd my_shell
+- cd my_shell
 
 
 Build the project:
 
 To build the shell, simply run:
 
-make
+- make
 
 If you want to force rebuild the project (in case of changes), you can use:
 
-make re
+- make re
 
 
 Run my_shell:
 
 After the build process is complete, run the shell with:
 
-./mysh
+- ./mysh
 
 Usage
 
