@@ -1,132 +1,151 @@
 /*
-** EPITECH PROJECT, 2025
-** my_str_to_word_array.c
+** EPITECH PROJECT, 2024
+** test
 ** File description:
-** splits a string into an array
+** my_str_to_word_array.c
 */
 
 #include <stdbool.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-static int is_it_delim(char const to_check, char const *delim)
-{
-    for (int i = 0; delim[i] != '\0'; i++)
-        if (to_check == delim[i])
-            return true;
-    return false;
-}
-
-static int size_word(char const *buff, char const *delim)
-{
-    int index = 0;
-
-    while (buff[index] != '\0' && !is_it_delim(buff[index], delim))
-        index += 1;
-    return index;
-}
-
-static int len_stay(const char *buff, char c)
+static int staylen(char const *buffer, char c)
 {
     int i = 0;
 
-    while (buff[i] != '\0' && buff[i] != c)
+    while (buffer[i] != '\0' && buffer[i] != c)
         i++;
-    if (buff[i] == c)
+    if (buffer[i] == c)
         i++;
     return i;
 }
 
-static int count_words(char const *buff, char const *delim,
-    const char *stay)
+static char *staydup(char const *buffer, char c)
 {
-    int nb_words = 0;
-
-    if (buff == NULL || delim == NULL)
-        return -1;
-    while (*buff != '\0') {
-        if (is_it_delim(*buff, delim)) {
-            buff++;
-            continue;
-        }
-        if (is_it_delim(*buff, stay)) {
-            buff += len_stay(&buff[1], *buff) + 1;
-            nb_words++;
-            continue;
-        }
-        buff += size_word(buff, delim);
-        nb_words += 1;
-    }
-    return nb_words;
-}
-
-static char *fill_index(char const *buff, char const *delim, int len)
-{
-    char *index = malloc(sizeof(char) * (len + 1));
-    int i = 0;
-
-    if (index == NULL)
-        return NULL;
-    while (buff[i] != '\0' && !is_it_delim(buff[i], delim)) {
-        index[i] = buff[i];
-        i += 1;
-    }
-    index[len] = '\0';
-    return index;
-}
-
-static char *duplicate_stay(char const *buff, char c)
-{
-    char *str = malloc(len_stay(buff, c) + 1);
+    char *str = malloc(staylen(buffer, c) + 1);
     int i = 0;
 
     if (str == NULL)
         return NULL;
-    while (buff[i] != '\0' && buff[i] != c) {
-        str[i] = buff[i];
+    while (buffer[i] != '\0' && buffer[i] != c) {
+        str[i] = buffer[i];
         i++;
     }
     str[i] = '\0';
     return str;
 }
 
-static char **fill_array(char const *buff, char const *delim,
-    const char *stay, char **array)
+static int is_delim(char const c, char const *delim)
 {
-    int index = 0;
-    int len = 0;
-
-    while (*buff != '\0') {
-        if (is_it_delim(*buff, delim)) {
-            buff++;
-            continue;
-        }
-        if (is_it_delim(*buff, stay) == true) {
-            array[index] = duplicate_stay(&buff[1], *buff);
-            buff += len_stay(&buff[1], *buff) + 1;
-            index++;
-            continue;
-        }
-        len = size_word(buff, delim);
-        array[index] = fill_index(buff, delim, len);
-        buff += len;
-        index += 1;
-    }
-    return array;
+    for (int i = 0; delim[i] != '\0'; i++)
+        if (c == delim[i])
+            return true;
+    return false;
 }
 
-char **my_str_to_word_array(char const *buff, char const *delim,
-    const char *stay)
+static int check_quote(char const *buffer, char const *stay)
 {
-    int nb_words = count_words(buff, delim, stay);
-    char **array = NULL;
+    int i = 0;
+    char const c = buffer[0];
 
-    if (nb_words == - 1 || buff == NULL)
+    if (is_delim(*buffer, stay) == false)
+        return 0;
+    ++i;
+    while (buffer[i] != c) {
+        if (buffer[i] == '\0') {
+            dprintf(STDERR_FILENO, "Unmatched \'%c\'.\n", c);
+            return -1;
+        }
+        ++i;
+    }
+    return 0;
+}
+
+static int wordlen(char const *buffer, char const *delim)
+{
+    int i = 0;
+
+    while (buffer[i] != '\0' && is_delim(buffer[i], delim) == false)
+        i++;
+    return i;
+}
+
+static char *worddup(char const *buffer, char const *delim)
+{
+    char *word = malloc(wordlen(buffer, delim) + 1);
+    int i = 0;
+
+    if (word == NULL)
         return NULL;
-    array = malloc(sizeof(char *) * (nb_words + 1));
-    if (array == NULL)
+    while (buffer[i] != '\0' && is_delim(buffer[i], delim) == false) {
+        word[i] = buffer[i];
+        i++;
+    }
+    word[i] = '\0';
+    return word;
+}
+
+static int count_words(char const *buffer, char const *delim, char const *stay)
+{
+    int counter = 0;
+
+    if (buffer == NULL || delim == NULL)
+        return 0;
+    while (*buffer != '\0') {
+        if (is_delim(*buffer, delim) == true) {
+            buffer++;
+            continue;
+        }
+        if (check_quote(buffer, stay) == -1)
+            return -1;
+        if (is_delim(*buffer, stay) == true) {
+            buffer += staylen(&(buffer[1]), *buffer) + 1;
+            counter++;
+            continue;
+        }
+        buffer += wordlen(buffer, delim);
+        counter++;
+    }
+    return counter;
+}
+
+static void populate_list(char const *buffer, char const *delim,
+    char const *stay, char **list)
+{
+    int counter = 0;
+
+    while (*buffer != '\0') {
+        if (is_delim(*buffer, delim) == true) {
+            buffer++;
+            continue;
+        }
+        if (is_delim(*buffer, stay) == true) {
+            list[counter] = staydup(&(buffer[1]), *buffer);
+            buffer += staylen(&(buffer[1]), *buffer) + 1;
+            counter++;
+            continue;
+        }
+        list[counter] = worddup(buffer, delim);
+        buffer += wordlen(buffer, delim);
+        counter++;
+    }
+    list[counter] = NULL;
+}
+
+char **my_str_to_word_array(char const *buffer,
+    char const *delim, char const *stay)
+{
+    int len = count_words(buffer, delim, stay);
+    char **list = NULL;
+
+    if (len < 0)
         return NULL;
-    array[nb_words] = NULL;
-    return fill_array(buff, delim, stay, array);
+    if (buffer == NULL || delim == NULL)
+        return NULL;
+    list = malloc((len + 1) * sizeof(char *));
+    if (list == NULL)
+        return NULL;
+    populate_list(buffer, delim, stay, list);
+    return list;
 }

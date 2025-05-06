@@ -1,17 +1,22 @@
 /*
-** EPITECH PROJECT, 2025
+** EPITECH PROJECT, 2024
 ** main.c
 ** File description:
-** main.c
+** main function
 */
 
-#include "src.h"
-#include "my_struct.h"
+#include <stdio.h>
+#include <unistd.h>
 
-int main(int, char **, char **env)
+#include "mysh.h"
+#include "my.h"
+
+int main(int const argc,
+    char const __attribute_maybe_unused__ **argv, char **env)
 {
-    if (env == NULL || env[0] == NULL ||
-        env[0][0] == '\0')
-        return ERROR;
-    return my_shell(env);
+    system_t *system = initialize_system(env);
+
+    if (argc != 1 || system == NULL)
+        return EPI_ERROR;
+    return mysh(system);
 }
