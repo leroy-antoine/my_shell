@@ -52,7 +52,7 @@ Usage
 
     To start the shell: Simply type ./mysh in your terminal after building the project.
 
-    To exit the shell: You can exit the shell by typing:
+To exit the shell: You can exit the shell by typing:
 
     exit
 
