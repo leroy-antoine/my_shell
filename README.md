@@ -62,11 +62,11 @@ Cleanup
 
 After using the shell, don't forget to clean up your build files. You can do this by running:
 
-make clean
+    make clean
 
 Or to remove all generated files (including the executable):
 
-make fclean
+    make fclean
 
 Contributing
 
