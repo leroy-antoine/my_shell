@@ -46,7 +46,7 @@ Run my_shell:
 
 After the build process is complete, run the shell with:
 
-    ./mysh
+    ./42sh
 
 Usage
 
