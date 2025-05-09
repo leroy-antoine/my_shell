@@ -41,10 +41,16 @@ int exec_proper_function(char **args,
 {
     tree_t *tree = NULL;
 
-    if (args == NULL || args[0] == NULL)
+    if (args == NULL)
         return return_value;
+    if (args[0] == NULL) {
+        free(args);
+        return return_value;
+    }
     tree = make_tree(args);
     if (tree == NULL)
         return EPI_ERROR;
-    return parse_tree(tree, sys);
+    return_value = parse_tree(tree, sys);
+    free_tree(tree);
+    return return_value;
 }

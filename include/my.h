@@ -14,12 +14,13 @@
 
 char **copy_arr(char **arr);
     #include <stdio.h>
+    #include <stdbool.h>
 
 typedef enum {
-    MY_NAN,
     NATURAL,
     INTEGER,
     RATIONAL,
+    MY_NAN,
 } nb_group_t;
 
 int is_int_float(char *av);
@@ -30,6 +31,8 @@ int my_is_number(char *str);
 void free_list(char **list);
 int my_list_len(char **list);
 char **dup_list(char **list);
+void del_index(char **list, int index);
+char **insert(char **argv, size_t index, char **found, size_t nb_found);
 char *my_strcat_inf(int count, char *str, ...);
 char *my_strdup_delim(char const *path, char c);
 void my_dputstr(char const fd, char const *str);
@@ -47,5 +50,10 @@ void my_show_word_array(char **arr);
 char **my_merge_word_array(char **arr_1, char **arr_2);
 void my_free_str(char **str);
 char *my_revstrndup(char *str, int n);
+int is_in_str(const char *str, const char c);
+char **array_dup_offset(char **list, int offset);
+int get_nblen(int nb);
+bool is_between_list(char **tab, int ind, const char *prev, const char *next);
+int is_between_str(char *str, int ind, const char prev, const char next);
 
 #endif

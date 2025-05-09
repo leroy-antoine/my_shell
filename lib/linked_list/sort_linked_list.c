@@ -8,62 +8,6 @@
 #include "mysh.h"
 #include <string.h>
 
-// static void swap_nodes(linked_list_t *list, node_t *node1, node_t *node2)
-// {
-//     if (node1 == node2)
-//         return;
-
-//     node_t *prev1 = node1->prev;
-//     node_t *next1 = node1->next;
-//     node_t *prev2 = node2->prev;
-//     node_t *next2 = node2->next;
-
-//     // Handle adjacent case
-//     if (prev1)
-//         prev1->next = node2;
-//     else
-//         list->head = node2;
-
-//     if (next2)
-//         next2->prev = node1;
-//     else
-//         list->tail = node1;
-//     if (node1->next == node2) {
-
-//         node1->next = next2;
-//         node1->prev = node2;
-//         node2->next = node1;
-//         node2->prev = prev1;
-//         return;
-//     }
-
-//     // Handle non-adjacent case
-//     // if (prev1)
-//     //     prev1->next = node2;
-//     // else
-//     //     list->head = node2;
-
-//     // if (next1)
-//     //     next1->prev = node2;
-
-//     // if (prev2)
-//     //     prev2->next = node1;
-
-//     // if (next2)
-//     //     next2->prev = node1;
-//     // else
-//     //     list->tail = node1;
-
-//     node_t *tmp_prev = node1->prev;
-//     node_t *tmp_next = node1->next;
-
-//     node1->prev = node2->prev;
-//     node1->next = node2->next;
-
-//     node2->prev = tmp_prev;
-//     node2->next = tmp_next;
-// }
-
 static void swap_edge(
     node_t *node1, node_t *node2, node_t *prev1, node_t *next2)
 {
@@ -116,6 +60,8 @@ void sort_linked_list(
     node_t *current = list->head;
     node_t *node = NULL;
 
+    if (current == NULL)
+        return;
     while (current->next != NULL) {
         node = find_switch_node(current, sort_data);
         if (node != current) {

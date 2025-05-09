@@ -10,6 +10,7 @@
 #include "my.h"
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 static bool is_user(char *user)
 {
@@ -41,7 +42,7 @@ static char *change_path_users(char *path)
     if (user == NULL)
         return NULL;
     if (is_user(user) == false) {
-        dprintf(2, str_message[UKN_USER], user);
+        dprintf(STDERR_FILENO, str_message[UKN_USER], user);
         return NULL;
     }
     path += strlen(user);
@@ -57,7 +58,7 @@ static char *change_path_main_user(char *path, linked_list_t *env)
 
     home = get_env_var(env, str_env[HOME_VAR]);
     if (home == NULL) {
-        dprintf(2, str_message[NO_FILE_DIR], "");
+        dprintf(STDERR_FILENO, str_message[NO_FILE_DIR], "");
         return NULL;
     }
     path++;

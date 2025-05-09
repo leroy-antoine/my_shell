@@ -15,7 +15,7 @@ static int fill_list(node_t *head, char **new_list)
     node_t *node = head;
 
     while (node != NULL){
-        new_list[i] = strdup(((env_var_t *)node->data)->line);
+        new_list[i] = strdup((char *)node->data);
         if (new_list[i] == NULL)
             return EPI_ERROR;
         i++;

@@ -17,6 +17,8 @@
     #define SUCCESS 0
     #define ERROR 84
     #define DELIMS ";<>|&()"
+    #define OFFSET 3
+    #define STR_CLEAR "\033[1;1H\e[2J"
 
 static const char *super_list[] __maybe_unused = {
     "&&",
@@ -47,6 +49,9 @@ typedef enum {
     OPEN_PARE,
     CLOSE_PARE,
     OPEN_BRACKET,
+    DOLLAR,
+    QUESTION,
+    STAR,
 } management_t;
 
 static const char *str_management[] __maybe_unused = {
@@ -60,6 +65,9 @@ static const char *str_management[] __maybe_unused = {
     [OPEN_PARE] = "(",
     [CLOSE_PARE] = ")",
     [OPEN_BRACKET] = "[",
+    [DOLLAR] = "$",
+    [QUESTION] = "?",
+    [STAR] = "*",
 };
 
 typedef enum {
@@ -98,6 +106,20 @@ typedef enum {
     FOREACH_PROMPT,
     NO_MATCH_STAR,
     END,
+    SET_LETTER,
+    SET_ALNUM,
+    UNSET_TOO_FEW,
+    UND_VAR,
+    TOO_MANY_CLOSE_PARE,
+    TOO_MANY_OPEN_PARE,
+    IF_TOO_FEW,
+    IF_SYNTAX,
+    IF_EMPTY,
+    IF_IMPROPER,
+    IF_PROMPT,
+    ENDIF,
+    THEN,
+    THEN_NO_END,
 } message_t;
 
 static const char *str_message[] __maybe_unused = {
@@ -138,6 +160,21 @@ static const char *str_message[] __maybe_unused = {
     [FOREACH_PROMPT] = "foreach? ",
     [NO_MATCH_STAR] = "%s: No match.\n",
     [END] = "end\n",
+    [SET_LETTER] = "set: Variable name must begin with a letter.\n",
+    [SET_ALNUM] = "set: Variable name must "
+    "contain alphanumeric characters.\n",
+    [UNSET_TOO_FEW] = "unset: Too few arguments.\n",
+    [UND_VAR] = "%s: Undefined variable.\n",
+    [TOO_MANY_CLOSE_PARE] = "Too many )'s.\n",
+    [TOO_MANY_OPEN_PARE] = "Too many ('s.\n",
+    [IF_TOO_FEW] = "if: Too few arguments.\n",
+    [IF_SYNTAX] = "if: Expression Syntax.\n",
+    [IF_EMPTY] = "if: Empty if.\n",
+    [IF_IMPROPER] = "if: Improper then.\n",
+    [IF_PROMPT] = "if? ",
+    [ENDIF] = "endif\n",
+    [THEN] = "then",
+    [THEN_NO_END] = "then: then/endif not found.\n"
 };
 
 typedef enum {
@@ -180,6 +217,7 @@ typedef enum {
     GREEN,
     MAGENTA,
     RESET,
+    CLEAR,
 } term_caps_t;
 
 static const char *str_term_caps[] __maybe_unused = {
@@ -192,6 +230,26 @@ static const char *str_term_caps[] __maybe_unused = {
     [GREEN] = "\033[1;32m",
     [MAGENTA] = "\033[1;35m",
     [RESET] = "\033[0m",
+    [CLEAR] = STR_CLEAR,
+};
+
+typedef enum {
+    CMP_EQUAL,
+    CMP_NOT_EQUAL,
+    CMP_GREATER,
+    CMP_GREATER_EQUAL,
+    CMP_LESS,
+    CMP_LESS_EQUAL,
+    NB_CMP,
+} str_cmp_t;
+
+static const char *str_cmp[] __maybe_unused = {
+    [CMP_EQUAL] = "==",
+    [CMP_NOT_EQUAL] = "!=",
+    [CMP_GREATER] = ">",
+    [CMP_GREATER_EQUAL] = ">=",
+    [CMP_LESS] = "<",
+    [CMP_LESS_EQUAL] = "<=",
 };
 
 #endif

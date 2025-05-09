@@ -7,9 +7,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-
 #include "my.h"
 #include "mysh.h"
+
 static bool check_jobs(char *command, system_t *sys, char **line)
 {
     for (int j = 0; func[j].key[0] != '\0'; j++) {

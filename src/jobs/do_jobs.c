@@ -6,6 +6,7 @@
 */
 
 #include "mysh.h"
+#include <unistd.h>
 
 static void print_job_list(node_t *node)
 {
@@ -17,10 +18,10 @@ static void print_job_list(node_t *node)
         data = node->data;
         if (data == NULL)
             continue;
-        dprintf(1, "[%ld]\tSuspended (tty output)\t\t", data->ID);
+        dprintf(STDOUT_FILENO, "[%ld]\tSuspended (tty output)\t\t", data->ID);
         for (size_t i = 0; data->command_line[i] != NULL; ++i)
-            dprintf(1, "%s ", data->command_line[i]);
-        dprintf(1, "\n");
+            dprintf(STDOUT_FILENO, "%s ", data->command_line[i]);
+        dprintf(STDOUT_FILENO, "\n");
         node = node->next;
     }
 }
@@ -29,7 +30,7 @@ void do_jobs(system_t *sys, char **)
 {
     if (sys == NULL || sys->jobs == NULL || sys->jobs->head == NULL ||
         sys->jobs->head->data == NULL) {
-        dprintf(1, "There are no jobs running in background.\n");
+        dprintf(STDOUT_FILENO, "There are no jobs running in background.\n");
         return;
     }
     print_job_list(sys->jobs->head);

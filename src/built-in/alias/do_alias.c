@@ -95,13 +95,15 @@ static int display_alias(linked_list_t *alias)
 int do_alias(char **arg, system_t *sys)
 {
     bool bracket = false;
+    char *tmp = NULL;
 
     arg++;
     if (arg[0] == NULL)
         return display_alias(sys->alias);
     if (arg[1] == NULL)
         return EPI_SUCCESS;
-    set_alias(sys->alias, arg[0], get_dup_cmd(arg + 1, &bracket), bracket);
+    tmp = get_dup_cmd(arg + 1, &bracket);
+    set_alias(sys->alias, arg[0], tmp, bracket);
     sort_linked_list(sys->alias, &sort_alias_var);
     return EPI_SUCCESS;
 }

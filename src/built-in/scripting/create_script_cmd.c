@@ -15,7 +15,7 @@ static script_cmd_t *create_scrip_cmd(char *cmd)
 
     if (element == NULL)
         return NULL;
-    element->cmd = strdup(cmd);
+    element->cmd = format_cmd(cmd);
     if (element->cmd == NULL) {
         free(element);
         return NULL;

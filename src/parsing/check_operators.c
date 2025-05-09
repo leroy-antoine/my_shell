@@ -21,7 +21,7 @@ int check_and(tree_t *tree)
 int check_ll(tree_t *tree)
 {
     if (tree->right != NULL && tree->right->redirection == PIPE) {
-        dprintf(2, "%s", str_message[AMBI_IN]);
+        dprintf(STDERR_FILENO, "%s", str_message[AMBI_IN]);
         return EXIT_FAILURE;
     }
     if (error_redirect(tree->right, str_message[MISS_NAME])
@@ -33,14 +33,14 @@ int check_ll(tree_t *tree)
 int check_l(tree_t *tree)
 {
     if (tree->left != NULL && tree->left->redirection == PIPE) {
-        dprintf(2, "%s", str_message[AMBI_IN]);
+        dprintf(STDERR_FILENO, "%s", str_message[AMBI_IN]);
         return EXIT_FAILURE;
     }
     if (error_redirect(tree->right, str_message[MISS_NAME])
         || error_redirect(tree->left, str_message[NULL_COM]))
         return EXIT_FAILURE;
     if (is_file(tree->right->command[0]) == 0) {
-        dprintf(2, str_message[NO_FILE_DIR],
+        dprintf(STDERR_FILENO, str_message[NO_FILE_DIR],
             tree->right->command[0]);
         return EXIT_FAILURE;
     }
@@ -58,7 +58,7 @@ int check_pipe_or(tree_t *tree)
 int check_r_rr(tree_t *tree)
 {
     if (tree->right != NULL && tree->right->redirection != NONE) {
-        dprintf(2, "%s", str_message[AMBI_OUT]);
+        dprintf(STDERR_FILENO, "%s", str_message[AMBI_OUT]);
         return EXIT_FAILURE;
     }
     if (error_redirect(tree->right, str_message[MISS_NAME])

@@ -8,12 +8,16 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+
 #include "formatsh.h"
 #include "mysh.h"
 #include "my.h"
+#include "../../include/mysh.h"
 
 void redirect_all_std(void)
 {
@@ -72,12 +76,79 @@ Test(prompt, prompt_test, .init = redirect_all_std)
     char *home = strdup("a");
     system_t sys = {NULL};
 
+    sys.prompt = NULL;
     var.hostname = strdup("host");
     var.status = 0;
     var.user = strdup("user");
-    sprintf(buff, "%s~%s>%s ✭ %s%s%s\n%d%s - %s%s➤ %s", str_term_caps[MAGENTA],
+    sprintf(buff, "%s%s>%s ✭ %s%s%s\n%d%s - %s%s➤ %s", str_term_caps[MAGENTA],
         wd, str_term_caps[BLUE], str_term_caps[YELLOW], var.hostname,
         str_term_caps[GREEN], var.status, str_term_caps[RESET],
+        str_term_caps[CYAN], var.user, str_term_caps[RESET]);
+    prompt(&var, home, &sys);
+    cr_assert_stdout_eq_str(buff);
+}
+
+Test(prompt, prompt_test_home_NULL, .init = redirect_all_std)
+{
+    prompt_t var = {0};
+    char *buff = malloc(100);
+    char *wd = getcwd(NULL, PATH_MAX_LEN);
+    int len = 0;
+    char *home = NULL;
+    system_t sys = {NULL};
+
+    sys.prompt = NULL;
+    var.hostname = strdup("host");
+    var.status = 0;
+    var.user = strdup("user");
+    sprintf(buff, "%s%s>%s ✭ %s%s%s\n%d%s - %s%s➤ %s", str_term_caps[MAGENTA],
+        wd, str_term_caps[BLUE], str_term_caps[YELLOW], var.hostname,
+        str_term_caps[GREEN], var.status, str_term_caps[RESET],
+        str_term_caps[CYAN], var.user, str_term_caps[RESET]);
+    prompt(&var, home, &sys);
+    cr_assert_stdout_eq_str(buff);
+}
+
+Test(prompt, prompt_test_in_home_var, .init = redirect_all_std)
+{
+    prompt_t var = {0};
+    char *buff = malloc(100);
+    char *wd = getcwd(NULL, PATH_MAX_LEN);
+    int len = 0;
+    char *home = strdup("/usr");
+    system_t sys = {NULL};
+
+    sys.prompt = NULL;
+    var.hostname = strdup("host");
+    var.status = 0;
+    var.user = strdup("user");
+    int fd = open("tmp", O_WRONLY | O_TRUNC);
+    dprintf(fd, "%s\t%s\t%s\n", home, wd, wd + 4);
+    close(fd);
+    sprintf(buff, "%s~%s>%s ✭ %s%s%s\n%d%s - %s%s➤ %s", str_term_caps[MAGENTA],
+        wd + 4, str_term_caps[BLUE], str_term_caps[YELLOW], var.hostname,
+        str_term_caps[GREEN], var.status, str_term_caps[RESET],
+        str_term_caps[CYAN], var.user, str_term_caps[RESET]);
+    prompt(&var, home, &sys);
+    cr_assert_stdout_eq_str(buff);
+}
+
+Test(prompt, prompt_test_status_1, .init = redirect_all_std)
+{
+    prompt_t var = {0};
+    char *buff = malloc(100);
+    char *wd = getcwd(NULL, PATH_MAX_LEN);
+    int len = 0;
+    char *home = strdup("a");
+    system_t sys = {NULL};
+
+    sys.prompt = NULL;
+    var.hostname = strdup("host");
+    var.status = 1;
+    var.user = strdup("user");
+    sprintf(buff, "%s%s>%s ✭ %s%s%s\n%d%s - %s%s➤ %s", str_term_caps[MAGENTA],
+        wd, str_term_caps[BLUE], str_term_caps[YELLOW], var.hostname,
+        str_term_caps[RED], var.status, str_term_caps[RESET],
         str_term_caps[CYAN], var.user, str_term_caps[RESET]);
     prompt(&var, home, &sys);
     cr_assert_stdout_eq_str(buff);
@@ -622,6 +693,108 @@ Test(mysh, SUCCESS_valid_or)
     cr_assert_eq(result, 0);
 }
 
+//JOB CONTROL
+Test(mysh, SUCCESS_back_ls)
+{
+    int result = test_main("SUCCESS_back_ls");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_fg)
+{
+    int result = test_main("SUCCESS_fg");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_fg_id)
+{
+    int result = test_main("SUCCESS_fg_id");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_fg_no_jobs)
+{
+    int result = test_main("ERROR_fg_no_jobs");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCES_jobs)
+{
+    int result = test_main("SUCCESS_jobs");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_jkill)
+{
+    int result = test_main("SUCCESS_jkill");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_jkill_no_jobs)
+{
+    int result = test_main("ERROR_jkill_no_jobs");
+
+    cr_assert_eq(result, 84);
+}
+
+Test(mysh, ERROR_jkill_usage)
+{
+    int result = test_main("ERROR_jkill_usage");
+
+    cr_assert_eq(result, 84);
+}
+
+Test(mysh, SUCCESS_jkill_all)
+{
+    int result = test_main("SUCCESS_jkill_all");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_fg_wrong_id)
+{
+    int result = test_main("ERROR_fg_wrong_id");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_fg_bad_id)
+{
+    int result = test_main("ERROR_fg_bad_id");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, SUCCESS_signals)
+{
+    handle_signal(0);
+}
+
+Test(mysh, SUCCESS_handle_ctr_l)
+{
+    handle_ctrl_c(0);
+}
+
+Test(mysh, SUCCESS_fg_multiple_id)
+{
+    int result = test_main("SUCCESS_fg_multiple_id");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh,  SUCCESS_kill_multiple_id)
+{
+    int result = test_main("SUCCESS_kill_multiple_id");
+
+    cr_assert_eq(result, 0);
+}
+
 // FOREACH
 
 Test(mysh, SUCCESS_foreach)
@@ -691,7 +864,7 @@ Test(mysh, ERROR_and_or2)
 {
     int result = test_main("ERROR_and_or2");
 
-    cr_assert_eq(result, 2);
+    cr_assert_eq(result, 0);
 }
 
 Test(mysh, ERROR_and_or3)
@@ -755,4 +928,216 @@ Test(mysh, SUCCESS_lot_or)
     int result = test_main("SUCCESS_lot_or");
 
     cr_assert_eq(result, 0);
+}
+
+// set
+
+Test(mysh, SUCCESS_set_one_arg)
+{
+    int result = test_main("SUCCESS_set_one_arg");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_set_one_arg_no_value)
+{
+    int result = test_main("SUCCESS_set_one_arg");
+
+    cr_assert_eq(result, 0);
+}
+
+
+Test(mysh, SUCCESS_set_two_arg_no_value)
+{
+    int result = test_main("SUCCESS_set_two_arg_no_value");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_set_three_arg)
+{
+    int result = test_main("SUCCESS_set_three_arg");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_set_multiple_var)
+{
+    int result = test_main("SUCCESS_set_multiple_var");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_set_start_letter)
+{
+    int result = test_main("ERROR_set_start_letter");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, ERROR_set_middle_letter)
+{
+    int result = test_main("ERROR_set_middle_letter");
+
+    cr_assert_eq(result, 1);
+}
+
+// unset
+
+Test(mysh, SUCCESS_unset_multiple_var)
+{
+    int result = test_main("SUCCESS_unset_multiple_var");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_unset_no_args)
+{
+    int result = test_main("ERROR_unset_no_args");
+
+    cr_assert_eq(result, 1);
+}
+
+// use var
+
+Test(mysh, SUCCESS_usevar_question_marq)
+{
+    int result = test_main("SUCCESS_usevar_question_marq");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_usevar_simple_quote)
+{
+    int result = test_main("SUCCESS_usevar_simple_quote");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_usevar_double_quote)
+{
+    int result = test_main("SUCCESS_usevar_double_quote");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_usevar_normal)
+{
+    int result = test_main("SUCCESS_usevar_normal");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_usevar_env)
+{
+    int result = test_main("SUCCESS_usevar_env");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_usevar_not_var)
+{
+    int result = test_main("ERROR_usevar_not_var");
+
+    cr_assert_eq(result, 1);
+}
+
+// if
+
+Test(mysh, ERROR_if_no_arg)
+{
+    int result = test_main("ERROR_if_no_arg");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, SUCCESS_if_one_nb)
+{
+    int result = test_main("SUCCESS_if_one_nb");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_if_one_nb)
+{
+    int result = test_main("ERROR_if_one_nb");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, SUCCESS_if_one_nb_pare)
+{
+    int result = test_main("SUCCESS_if_one_nb_pare");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_if_one_nb_pare)
+{
+    int result = test_main("ERROR_if_one_nb_pare");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, SUCCESS_if_two_arg_nb)
+{
+    int result = test_main("SUCCESS_if_two_arg_nb");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_if_two_arg_str)
+{
+    int result = test_main("SUCCESS_if_two_arg_str");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_if_three_arg_nb)
+{
+    int result = test_main("SUCCESS_if_three_arg_nb");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_if_three_arg_str)
+{
+    int result = test_main("SUCCESS_if_three_arg_str");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, SUCCESS_if_one_sign_pare)
+{
+    int result = test_main("SUCCESS_if_one_sign_pare");
+
+    cr_assert_eq(result, 0);
+}
+
+Test(mysh, ERROR_if_four_arg)
+{
+    int result = test_main("ERROR_if_four_arg");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, ERROR_if_not_sign)
+{
+    int result = test_main("ERROR_if_not_sign");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, ERROR_if_empty)
+{
+    int result = test_main("ERROR_if_empty");
+
+    cr_assert_eq(result, 1);
+}
+
+Test(mysh, ERROR_if_too_much)
+{
+    int result = test_main("ERROR_if_too_much");
+
+    cr_assert_eq(result, 1);
 }

@@ -21,7 +21,7 @@ static int error_rr_r(tree_t *tree, system_t *sys, int *fd, int mode)
         return EXIT_FAILURE;
     *fd = open(tree->right->command[0], O_WRONLY | O_CREAT | mode, 0664);
     if (*fd == -1) {
-        dprintf(2, "%s: %s.\n",
+        dprintf(STDERR_FILENO, "%s: %s.\n",
             tree->right->command[0], strerror(errno));
         return EXIT_FAILURE;
     }

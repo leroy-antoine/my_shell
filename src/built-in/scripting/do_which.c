@@ -64,8 +64,11 @@ static int check_exec(char *arg, char *path)
         return COMMAND_ERROR;
     }
     if (origin == NULL)
-        origin = arg;
-    dprintf(STDOUT_FILENO, "%s\n", origin);
+        dprintf(STDOUT_FILENO, "%s\n", arg);
+    else {
+        dprintf(STDOUT_FILENO, "%s\n", origin);
+        free(origin);
+    }
     return SUCCESS;
 }
 
@@ -86,7 +89,7 @@ static int which_loop(char **args, system_t *sys)
 int do_which(char **args, system_t *sys)
 {
     if (my_list_len(args) < 2) {
-        dprintf(2, "%s", str_message[WHICH_TOO_FEW]);
+        dprintf(STDERR_FILENO, "%s", str_message[WHICH_TOO_FEW]);
         return COMMAND_ERROR;
     }
     return which_loop(args + 1, sys);

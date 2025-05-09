@@ -15,13 +15,15 @@
 
 void exec_new_line(index_t *ind)
 {
-    if (ind->buf == NULL)
-        ind->buf = strndup("\0", 1);
+    if (ind->buf == NULL) {
+        ind->buf = strdup("");
+    }
     ind->buf = realloc(ind->buf, strlen(ind->buf) + 2);
     if (ind->buf == NULL)
         return;
-    ind->buf = strcat(ind->buf, "\n\0");
+    ind->buf = strcat(ind->buf, "\n");
     write(1, "\n", 1);
     ind->exit = true;
+    ind->current_cmd = NULL;
     return;
 }

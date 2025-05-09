@@ -37,7 +37,7 @@ static int kill_first_elem(system_t *sys, jobs_t *data, bool all)
 
 static int kill_usage(void)
 {
-    dprintf(2, "To use kill, type :\n"
+    dprintf(STDERR_FILENO, "To use kill, type :\n"
             "[jkill ID], where ID is the ID of the process you want to kill.\n"
             "Type [jobs] to see the processes that are "
             "currently running and their IDs.\n"
@@ -47,24 +47,21 @@ static int kill_usage(void)
     return EPI_ERROR;
 }
 
-static int kill_every_process(system_t *sys, linked_list_t *job)
+static int kill_every_process(linked_list_t *job)
 {
-    node_t *head = job->head;
+    node_t *next = job->head;
     jobs_t *data = NULL;
     long int nb_jobs = 0;
 
-    if (head == NULL || head->data == NULL)
+    if (next == NULL)
         return kill_usage();
-    data = job->head->data;
-    kill_first_elem(sys, data, true);
-    while (head != NULL) {
+    while (job->head != NULL) {
         ++nb_jobs;
-        if (head->next != NULL) {
-            data = head->next->data;
-            print_and_stop(data->command_line, data->pid, data->ID, true);
-            head->next = head->next->next;
-        }
-        head = head->next;
+        next = job->head->next;
+        data = job->head->data;
+        print_and_stop(data->command_line, data->pid, data->ID, true);
+        delete_node(job, job->head, free_jobs);
+        job->head = next;
     }
     dprintf(STDOUT_FILENO, "Successfully killed %ld jobs.\n", nb_jobs);
     return EPI_SUCCESS;
@@ -85,8 +82,7 @@ static int kill_proper_process(long int id, linked_list_t *jobs, system_t *sys)
             data = head->next->data;
         if (head->next != NULL && data->ID == id) {
             print_and_stop(data->command_line, data->pid, data->ID, false);
-            free_jobs(head->next->data);
-            head->next = head->next->next;
+            delete_node(jobs, head->next, free_jobs);
             return EPI_SUCCESS;
         }
         head = head->next;
@@ -106,7 +102,7 @@ int do_kill(char **args, system_t *sys)
     if (my_list_len(args) != 2)
         return kill_usage();
     if (strcmp(args[1], "all") == 0)
-        return kill_every_process(sys, sys->jobs);
+        return kill_every_process(sys->jobs);
     id = strtol(args[1], &endptr, DECIMAL_BASE);
     if (id == 0)
         return kill_usage();

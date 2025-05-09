@@ -30,9 +30,7 @@ void fill_jobs_infos(linked_list_t *jobs, pid_t pid,
     char **command)
 {
     jobs_t *new_job = NULL;
-    static int id = 0;
 
-    id += 1;
     new_job = malloc(sizeof(jobs_t));
     if (new_job == NULL) {
         jobs->head = NULL;
@@ -44,7 +42,10 @@ void fill_jobs_infos(linked_list_t *jobs, pid_t pid,
         return;
     }
     new_job->pid = pid;
-    new_job->ID = id;
+    if (jobs->head == NULL)
+        new_job->ID = 1;
+    else
+        new_job->ID = ((jobs_t *)jobs->head->data)->ID + 1;
     push_to_head(jobs, new_job);
 }
 

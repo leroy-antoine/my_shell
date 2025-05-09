@@ -16,6 +16,7 @@
     #define EPI_ERROR 84
     #define EPI_SUCCESS 0
     #define COMMAND_ERROR 1
+    #define SKIP -1
     #define ENV_ERROR 125
     #define OPEN_ERROR -1
 
@@ -120,10 +121,10 @@ typedef struct redirection_s {
     unsigned int priority;
 } redirection_t;
 
-typedef struct env_var_s {
-    char *line;
-} env_var_t;
-
+typedef struct var_s {
+    char *var;
+    char *value;
+} var_t;
 
 typedef struct alias_var_s {
     char *alias;
@@ -146,6 +147,7 @@ typedef struct history_s {
 
 typedef struct system_s {
     linked_list_t *env;
+    linked_list_t *var;
     linked_list_t *alias;
     linked_list_t *jobs;
     history_t *history;
@@ -156,17 +158,20 @@ typedef struct system_s {
 /* index structure my_getline */
 typedef struct index_s {
     char *buf;
+    int len;
     int index;
-    int move_index;
     int esc;
     struct termios old;
     char exit;
+    history_t *history;
+    node_t *current_cmd;
 } index_t;
 
+void free_tree(tree_t *head);
 void my_free_str(char **str);
 char *my_revstrndup(char *str, int n);
-void prompt_handeling(index_t *ind, char *prompt);
-void del_line(char *str, int nb_col);
+void prompt_handling(index_t *ind, char *prompt);
+void del_line(char *str, char *buff, int nb_col);
 int move_up(index_t *ind);
 int move_down(index_t *ind);
 int move_right(index_t *ind);
@@ -175,14 +180,19 @@ bool is_del(char c);
 bool is_new_line(char c);
 bool is_esc(char c);
 bool is_ctrl_d(char c);
+bool is_tab(char c);
 void exec_del(index_t *ind);
 void exec_new_line(index_t *ind);
 void exec_esc(index_t *ind);
 void exec_ctrl_d(index_t *ind);
+void exec_tab(index_t *ind);
+void do_tab(index_t *ind);
 void exec_add_letter(index_t *ind, char const c);
 void get_arrow(char c, index_t *ind);
-index_t *init_getline(void);
+index_t *init_getline(history_t *history);
 int get_s_char(char c);
+void exec_ctrl_l(index_t *ind);
+bool is_ctrl_l(char c);
 
 enum arrow {
     UP_ARROW = 'A',
@@ -192,14 +202,12 @@ enum arrow {
 };
 
     #define CHAR -1
-    // #define UP_ARROW 'A'
-    // #define DOWN_ARROW 'B'
-    // #define RIGHT_ARROW 'C'
-    // #define LEFT_ARROW 'D'
     #define EOT -1
 
     #define ESC '\033'
+    #define TAB '\t'
     #define CTRLD 4
+    #define CTRLL 12
     #define MOVE_RIGHT "\033[C"
     #define MOVE_LEFT "\033[D"
     #define ARRSIZE 5
@@ -221,6 +229,8 @@ static const exec_special_char_t special_char_list[] = {
     {is_new_line, exec_new_line},
     {is_esc, exec_esc},
     {is_ctrl_d, exec_ctrl_d},
+    {is_tab, exec_tab},
+    {is_ctrl_l, exec_ctrl_l},
 };
 
 typedef struct script_cmd_s {
@@ -245,13 +255,13 @@ int check_l(tree_t *tree);
 int check_ll(tree_t *tree);
 
 static const redirection_t redirection_list[] = {
-    {SEMICOLON, ";", NULL, NULL, 3},
-    {AND, "&&", &exec_and, &check_and, 2},
-    {OR, "||", &exec_or, &check_pipe_or, 2},
-    {REDIRECTION_R, ">", &exec_r, &check_r_rr, 1},
-    {REDIRECTION_RR, ">>", &exec_rr, &check_r_rr, 1},
-    {REDIRECTION_L, "<", &exec_l, &check_l, 1},
-    {REDIRECTION_LL, "<<", &exec_ll, &check_ll, 1},
+    {SEMICOLON, ";", NULL, NULL, 7},
+    {OR, "||", &exec_or, &check_pipe_or, 6},
+    {AND, "&&", &exec_and, &check_and, 5},
+    {REDIRECTION_R, ">", &exec_r, &check_r_rr, 4},
+    {REDIRECTION_RR, ">>", &exec_rr, &check_r_rr, 3},
+    {REDIRECTION_L, "<", &exec_l, &check_l, 2},
+    {REDIRECTION_LL, "<<", &exec_ll, &check_ll, 2},
     {PIPE, "|", &exec_pipe, &check_pipe_or, 1},
 };
 
@@ -273,9 +283,11 @@ char *get_env_var(linked_list_t *env, const char *var);
 char *which_path(char *command, char *paths);
 void command(char **args, system_t *sys,
     char **path, char **env_list);
-char *format_cmd(char const *command);
+char *format_cmd(char *command);
 int replace_wave(char **arg, linked_list_t *env);
 int handle_star(char ***argv);
+char *handle_var(char *command, system_t *sys, int *return_value);
+int handle_question_mark(char ***argv);
 
 /*system*/
 
@@ -295,10 +307,11 @@ int do_which(char **args, system_t *sys);
 int do_where(char **args, system_t *sys);
 int do_repeat(char **args, system_t *sys);
 int do_foreach(char **args, system_t *sys);
+int do_if(char **args, system_t *sys);
 linked_list_t *get_env(char **env);
 void free_env_var(void *data);
 char **env_to_list(linked_list_t *env);
-env_var_t *create_env_var(char *str);
+char *create_env_var(char *str);
 void free_alias_var(void *data);
 alias_var_t *create_alias_var(char *alias, char *cmd, bool bracket);
 void add_alias_node(linked_list_t *list, char *alias, char *cmd, bool bracket);
@@ -316,18 +329,27 @@ history_t *get_history(linked_list_t *env);
 void free_history_cmd(void *data);
 int add_script_cmd_node(linked_list_t *list, char *cmd);
 void free_script_cmd(void *data);
+void free_var(void *data);
+var_t *create_var(char *var, char *value);
+int do_set(char **args, system_t *sys);
+int do_unset(char **args, system_t *sys);
+bool sort_var(void *data_first, void *data_second);
+int format_scripting(char ***args, system_t *sys);
+int get_condition(char **args, bool *condition, int *ind);
 
 /* execution */
 void exec_command_no_fork(char **args, system_t *sys,
     char **path, char **env_list);
 int exec_command(char **args, system_t *sys);
+void exec_operator_no_fork(tree_t *tree,
+    system_t *sys, char **path, char **env_list);
 int exec_operator(tree_t *tree, system_t *sys);
 
 /* binary tree */
 tree_t *make_tree(char **command);
 
 /* my_getline */
-int my_getline(char *prompt, char **buff, size_t *len, int fd);
+int my_getline(char *prompt, char **buff, size_t *len, history_t *history);
 
 
 typedef struct exec_command {
@@ -348,7 +370,10 @@ static const exec_command_t commands[] = {
     {"where", &do_where},
     {"repeat", &do_repeat},
     {"foreach", &do_foreach},
-    {"jkill", &do_kill}
+    {"jkill", &do_kill},
+    {"set", &do_set},
+    {"unset", &do_unset},
+    {"if", &do_if},
 };
 
 /* letter allowed for fist env variable name */

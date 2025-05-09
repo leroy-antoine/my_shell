@@ -9,14 +9,12 @@
 #include "mysh.h"
 #include "my.h"
 
-env_var_t *create_env_var(char *str)
+char *create_env_var(char *str)
 {
-    env_var_t *env_var = malloc(sizeof(env_var_t));
+    char *env_var = NULL;
 
+    env_var = strdup(str);
     if (env_var == NULL)
-        return NULL;
-    env_var->line = strdup(str);
-    if (env_var->line == NULL)
         return NULL;
     return env_var;
 }

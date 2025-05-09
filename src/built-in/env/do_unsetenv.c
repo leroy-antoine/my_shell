@@ -22,7 +22,7 @@ static bool is_var_key_same(void *node_data, void *arg)
 
     if (node_data == NULL || arg == NULL)
         return false;
-    buff = strdup(((env_var_t *)node_data)->line);
+    buff = strdup((char *)node_data);
     if (buff == NULL)
         return false;
     env_var_1 = strtok_r(buff, str_management[EQUAL], &buff);

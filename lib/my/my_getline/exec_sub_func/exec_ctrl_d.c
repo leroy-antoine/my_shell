@@ -15,7 +15,7 @@
 
 void exec_ctrl_d(index_t *ind)
 {
-    for (int i = 0; i < ind->index; i++)
+    for (int i = 0; i < ind->len; i++)
         dprintf(STDOUT_FILENO, "\b \b");
     if (tcsetattr(1, TCSANOW, &ind->old) != SUCCESS)
         return;

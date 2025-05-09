@@ -48,10 +48,10 @@ static int arg_loop(char *arg, char *path)
         if (origin != NULL) {
             dprintf(STDOUT_FILENO, "%s\n", origin);
             return_value = EXIT_SUCCESS;
+            free(origin);
         }
         tmp = strtok(NULL, str_management[COLON]);
     }
-    free(path);
     return return_value;
 }
 
@@ -66,6 +66,7 @@ static int where_loop(char **args, system_t *sys)
             return COMMAND_ERROR;
         if (arg_loop(args[i], path) == COMMAND_ERROR)
             return_value = COMMAND_ERROR;
+        free(path);
     }
     return return_value;
 }
@@ -73,7 +74,7 @@ static int where_loop(char **args, system_t *sys)
 int do_where(char **args, system_t *sys)
 {
     if (my_list_len(args) < 2) {
-        dprintf(2, "%s", str_message[WHERE_TOO_FEW]);
+        dprintf(STDERR_FILENO, "%s", str_message[WHERE_TOO_FEW]);
         return COMMAND_ERROR;
     }
     return where_loop(args + 1, sys);

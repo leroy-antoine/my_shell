@@ -24,14 +24,15 @@ static int is_str_term_caps(char const *str)
     return SUCCESS;
 }
 
-void del_line(char *str, int nb_col)
+void del_line(char *str, char *buff, int nb_col)
 {
     double len = (double)strlen(str);
     int nb = 0;
 
-    for (int i = 0; str[i] != '\0'; i++) {
+    if (buff != NULL)
+        len += (double)strlen(buff) - OFFSET;
+    for (int i = 0; str[i] != '\0'; i++)
         len -= is_str_term_caps(str + i);
-    }
     nb = ceil(len / nb_col);
     for (int i = 0; i < nb + 1; i++) {
         dprintf(STDOUT_FILENO, "%s", str_term_caps[DEL_LINE]);

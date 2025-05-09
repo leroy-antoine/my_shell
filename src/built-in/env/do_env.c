@@ -13,7 +13,7 @@ static void print_env_var(void *data)
 {
     if (data == NULL)
         return;
-    dprintf(STDOUT_FILENO, "%s\n", ((env_var_t *)data)->line);
+    dprintf(STDOUT_FILENO, "%s\n", (char *)data);
     return;
 }
 

@@ -30,10 +30,10 @@ static int handle_exclamation(char ***args, linked_list_t *history)
         return EPI_ERROR;
     prev_separated_cmd = my_str_to_word_array(tmp, " \n", "");
     prev_cmd = my_merge_word_array(prev_separated_cmd, &args[0][1]);
-    free(prev_separated_cmd);
+    free_list(prev_separated_cmd);
     if (prev_cmd == NULL)
         return EPI_ERROR;
-    free(*args);
+    free_list(*args);
     *args = prev_cmd;
     return EPI_SUCCESS;
 }
@@ -42,30 +42,63 @@ static int handle_history(char ***args, history_t *history)
 {
     char *cmd = NULL;
 
+    if (*args[0] == NULL)
+        return EPI_ERROR;
     if (strcmp(*args[0], "!!") == 0)
         handle_exclamation(args, history->history);
     cmd = my_join_array(*args, " ");
     if (cmd == NULL)
         return EPI_ERROR;
     add_to_history(cmd, history);
+    free(cmd);
     return EPI_SUCCESS;
+}
+
+static int is_command_error(prompt_t *variables)
+{
+    variables->status = COMMAND_ERROR;
+    return COMMAND_ERROR;
 }
 
 static int format_tab_cmd(char ***args, prompt_t *variables, system_t *sys)
 {
-    handle_history(args, sys->history);
+    if (handle_history(args, sys->history) == EPI_ERROR)
+        return SUCCESS;
     check_alias(args, sys->alias);
     if (*args == NULL)
         return EPI_ERROR;
     if (replace_wave(*args, sys->env) == COMMAND_ERROR ||
-        handle_star(args) == EPI_ERROR) {
-        variables->status = COMMAND_ERROR;
-        return COMMAND_ERROR;
-    }
+        handle_star(args) == EPI_ERROR ||
+        handle_question_mark(args) == EPI_ERROR)
+        return is_command_error(variables);
     return EPI_SUCCESS;
 }
 
-int check_tty(char **command, int *stop_getline, system_t *sys, prompt_t *vars)
+static int check_pare(char **args)
+{
+    int count = 0;
+
+    for (int i = 0; args[i] != NULL; i++) {
+        if (*args[i] == *str_management[CLOSE_PARE])
+            count--;
+        if (*args[i] == *str_management[OPEN_PARE])
+            count++;
+        if (count == SKIP) {
+            dprintf(STDERR_FILENO, "%s", str_message[TOO_MANY_CLOSE_PARE]);
+            free_list(args);
+            return COMMAND_ERROR;
+        }
+    }
+    if (count != 0) {
+        dprintf(STDERR_FILENO, "%s", str_message[TOO_MANY_OPEN_PARE]);
+        free_list(args);
+        return COMMAND_ERROR;
+    }
+    return SUCCESS;
+}
+
+static int check_tty(
+    char **command, int *stop_getline, system_t *sys, prompt_t *vars)
 {
     size_t size = 0;
 
@@ -77,7 +110,7 @@ int check_tty(char **command, int *stop_getline, system_t *sys, prompt_t *vars)
         if (prompt(vars, get_env_var(
             sys->env, str_env[HOME_VAR]), sys) == ERROR)
             return ERROR;
-        *stop_getline = my_getline(sys->prompt, command, &size, STDIN_FILENO);
+        *stop_getline = my_getline(sys->prompt, command, &size, sys->history);
     }
     return SUCCESS;
 }
@@ -87,19 +120,22 @@ int get_input(char **command,
 {
     char *tmp = NULL;
     int stop_getline = 0;
+    int return_value = 0;
 
-    check_tty(command, &stop_getline, sys, variables);
-    tmp = format_cmd(*command);
+    if (check_tty(command, &stop_getline, sys, variables) == ERROR
+        || stop_getline == EOF || *command == NULL) {
+            free(*command);
+            return EPI_ERROR;
+        }
+    tmp = handle_var(format_cmd(*command), sys, &variables->status);
     if (tmp == NULL)
-        return EPI_ERROR;
-    if (*command == NULL)
-        return EPI_ERROR;
+        return return_value;
     *args = my_str_to_word_array(tmp, " \n\t", "\"\'");
     if (*args == NULL)
-        return COMMAND_ERROR;
+        return is_command_error(variables);
     free(tmp);
     free(*command);
-    if (stop_getline == EOF)
-        return EPI_ERROR;
+    if (check_pare(*args) == COMMAND_ERROR)
+        return is_command_error(variables);
     return format_tab_cmd(args, variables, sys);
 }

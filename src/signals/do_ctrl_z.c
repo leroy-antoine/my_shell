@@ -15,8 +15,11 @@ void do_ctrl_z(system_t *sys, char **command, pid_t pid,
 {
     jobs_t *data = NULL;
 
-    *status = EPI_SUCCESS;
+    if (status != NULL)
+        *status = EPI_SUCCESS;
     kill(pid, SIGTSTP);
+    if (sys == NULL || command == NULL)
+        return;
     fill_jobs_infos(sys->jobs, pid, command);
     data = sys->jobs->head->data;
     dprintf(STDOUT_FILENO, "Suspended [%ld] ", data->ID);

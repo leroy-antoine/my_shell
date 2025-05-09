@@ -15,19 +15,18 @@
 bool is_env_variable(linked_list_t *env, const char *var)
 {
     node_t *node = NULL;
-    char *buff = NULL;
     char *line = NULL;
 
     if (env == NULL || var == NULL)
         return false;
     node = env->head;
     while (node != NULL) {
-        line = strdup(((env_var_t *)node->data)->line);
-        buff = strtok_r(line, str_message[EQUAL], &line);
-        if (strcmp(buff, var) == 0) {
-            free(buff);
+        line = strdup((char *)node->data);
+        if (strncmp(line, var, strlen(var)) == 0) {
+            free(line);
             return true;
         }
+        free(line);
         node = node->next;
     }
     return false;

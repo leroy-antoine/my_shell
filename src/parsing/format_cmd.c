@@ -8,6 +8,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "formatsh.h"
+#include "my.h"
+#include "mysh.h"
 
 static int is_multiple_delim(char *str, int i)
 {
@@ -63,30 +65,34 @@ static char *create_new_str(char *last, char *new_str)
 {
     int index_new = 0;
     int delim = 0;
+    int between = false;
 
     for (int i = 0; last[i] != '\0'; i++) {
+        between = is_between_str(last, i, *str_management[OPEN_PARE],
+            *str_management[CLOSE_PARE]);
         delim = is_delim(last, i);
-        if (delim == BASIC_OPERATOR) {
+        if (delim == BASIC_OPERATOR && between == SKIP) {
             fill_char_delim(last, new_str, &index_new, i);
         }
-        if (delim == EDGE_OPERATOR) {
+        if (delim == EDGE_OPERATOR && between == SKIP) {
             fill_char_edgecase(last, new_str, &index_new, &i);
         }
-        if (delim == 0)
+        if (delim == 0 || between != SKIP)
             new_str[index_new] = last[i];
         index_new += 1;
     }
     return new_str;
 }
 
-char *format_cmd(char *str)
+static int get_nb_spaces(char *str)
 {
-    int len = strlen(str);
-    int nb_spaces = 0;
-    char *new_str = NULL;
     int delim = 0;
+    int nb_spaces = 0;
 
     for (int i = 0; str[i] != '\0'; i++) {
+        if (is_between_str(str, i, *str_management[OPEN_PARE],
+            *str_management[CLOSE_PARE]) != SKIP)
+            continue;
         delim = is_delim(str, i);
         if (delim == BASIC_OPERATOR)
             nb_spaces += 2;
@@ -95,6 +101,15 @@ char *format_cmd(char *str)
             i++;
         }
     }
+    return nb_spaces;
+}
+
+char *format_cmd(char *str)
+{
+    int len = strlen(str);
+    char *new_str = NULL;
+    int nb_spaces = get_nb_spaces(str);
+
     new_str = malloc(sizeof(char) * (len + nb_spaces + 1));
     if (new_str == NULL)
         return NULL;

@@ -7,9 +7,9 @@ make
 err() {
     TOTAL=$((TOTAL+1))
     rm a -f
-    IS="$(echo $1 | ./42sh 2>&1)"
+    IS="$(echo $1 | timeout 2 ./42sh 2>&1)"
     rm a -f
-    SHOULD="$(echo $1 | tcsh 2>&1)"
+    SHOULD="$(echo $1 | timeout 2 tcsh 2>&1)"
     if test "$(echo $IS)" != "$(echo $SHOULD)"
     then
         FAILED=$((FAILED+1))
@@ -26,9 +26,9 @@ err() {
 out() {
     TOTAL=$((TOTAL+1))
     rm a -f
-    IS="$(echo $1 | ./42sh 2> /dev/null)"
+    IS="$(echo $1 | timeout 2 ./42sh 2> /dev/null)"
     rm a -f
-    SHOULD="$(echo $1 | tcsh 2> /dev/null)"
+    SHOULD="$(echo $1 | timeout 2 tcsh 2> /dev/null)"
     if test "$(echo $IS)" != "$(echo $SHOULD)"
     then
         FAILED=$((FAILED+1))

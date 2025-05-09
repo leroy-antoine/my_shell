@@ -24,11 +24,11 @@ int is_file_error(char *path)
     struct stat file_stat = {0};
 
     if (stat(path, &file_stat) == -1) {
-        dprintf(2, str_message[COM_NOT_FOUND], path);
+        dprintf(STDERR_FILENO, str_message[COM_NOT_FOUND], path);
         return false;
     }
     if (S_ISREG(file_stat.st_mode) == false) {
-        dprintf(2, str_message[PERM_DENIED], path);
+        dprintf(STDERR_FILENO, str_message[PERM_DENIED], path);
         return false;
     }
     return true;
@@ -53,7 +53,7 @@ static void is_correct_file(char *file)
     if (is_file_error(file) == false)
         exit(1);
     if (is_good_archi(file) == false) {
-        dprintf(2, str_message[FORM_ERROR], file);
+        dprintf(STDERR_FILENO, str_message[FORM_ERROR], file);
         exit(1);
     }
 }
@@ -64,12 +64,12 @@ static void error(int *status)
 
     if (signal != 0) {
         if (signal == SIGFPE)
-            dprintf(2, "%s", str_message[FLOAT_EXP]);
+            dprintf(STDERR_FILENO, "%s", str_message[FLOAT_EXP]);
         else
-            dprintf(2, "%s", strsignal(signal));
+            dprintf(STDERR_FILENO, "%s", strsignal(signal));
         if (__WCOREDUMP(signal) != 0)
-            dprintf(2, "%s", str_message[CORE_DUMP]);
-        dprintf(2, "\n");
+            dprintf(STDERR_FILENO, "%s", str_message[CORE_DUMP]);
+        dprintf(STDERR_FILENO, "\n");
         return;
     }
     *status = WEXITSTATUS(*status);
@@ -89,7 +89,7 @@ void command(char **args, system_t *sys,
     is_correct_file(*path);
     if (execve(*path, args, env_list) == -1) {
         error = strerror(errno);
-        dprintf(2, "%s: %s.\n", *path, error);
+        dprintf(STDERR_FILENO, "%s: %s.\n", *path, error);
         exit(1);
     }
 }

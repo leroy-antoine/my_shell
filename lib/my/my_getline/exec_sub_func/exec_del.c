@@ -16,11 +16,11 @@
 static void create_new_string(index_t *ind, char *tmp_start,
     char *tmp_end, char *tmp)
 {
-    ind->buf = realloc(ind->buf, ind->index + 1);
+    ind->buf = realloc(ind->buf, ind->len + 1);
     if (ind->buf == NULL)
         return;
+    --ind->len;
     --ind->index;
-    --ind->move_index;
     strcpy(tmp, tmp_start);
     strcat(tmp, tmp_end);
     strcpy(ind->buf, tmp);
@@ -32,13 +32,13 @@ static void create_new_string(index_t *ind, char *tmp_start,
 
 void exec_del(index_t *ind)
 {
-    char *tmp_start = strndup(ind->buf, ind->move_index - 1);
-    char *tmp_end = my_revstrndup(ind->buf, ind->index - ind->move_index);
+    char *tmp_start = strndup(ind->buf, ind->index - 1);
+    char *tmp_end = my_revstrndup(ind->buf, ind->len - ind->index);
     char *tmp = calloc(strlen(ind->buf), sizeof(char));
 
     if (tmp_start == NULL || tmp_end == NULL || tmp == NULL)
         return;
-    if (ind->move_index - 1 < 0) {
+    if (ind->index - 1 < 0) {
         my_free_str(&tmp);
         my_free_str(&tmp_start);
         my_free_str(&tmp_end);

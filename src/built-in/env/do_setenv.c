@@ -13,10 +13,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static int replace_var(char *line, env_var_t *env_var)
+static int replace_var(char *line, char **data)
 {
-    free(env_var->line);
-    env_var->line = strdup(line);
+    free(*data);
+    *data = strdup(line);
     free(line);
     return EPI_SUCCESS;
 }
@@ -32,7 +32,7 @@ static bool is_letter(char c, const char *str)
 static bool correct_name_var(char *var)
 {
     if (var == NULL)
-        return NULL;
+        return false;
     if (is_letter(*var, first_env_char_allowed) == false) {
         dprintf(STDERR_FILENO, "%s", str_message[SETENV_LETTER]);
         return false;
@@ -48,8 +48,11 @@ static bool correct_name_var(char *var)
 static bool is_env_var_line(char *line, const char *var)
 {
     char *line_dup = strdup(line);
-    char *line_var = strtok_r(line_dup, str_management[EQUAL], &line_dup);
+    char *line_var = NULL;
 
+    if (line_dup == NULL)
+        return false;
+    line_var = strtok_r(line_dup, str_management[EQUAL], &line_dup);
     if (line_var == NULL || strcmp(line_var, var) != 0) {
         free(line_var);
         return false;
@@ -61,23 +64,23 @@ static bool is_env_var_line(char *line, const char *var)
 int change_or_create(const char *var, char *value, linked_list_t *env)
 {
     node_t *node = env->head;
-    env_var_t *env_var = NULL;
+    char *data = NULL;
     char *line = my_strcat_inf(
         3, (char *)var, (char *)str_management[EQUAL], value);
 
     if (line == NULL)
         return EPI_ERROR;
     while (node != NULL) {
-        if (is_env_var_line(((env_var_t *)node->data)->line, var) == true) {
-            replace_var(line, (env_var_t *)node->data);
+        if (is_env_var_line((char *)node->data, var) == true) {
+            replace_var(line, (char **)(&node->data));
             return EPI_SUCCESS;
         }
         node = node->next;
     }
-    env_var = create_env_var(line);
-    if (env_var == NULL)
+    data = create_env_var(line);
+    if (data == NULL)
         return EPI_ERROR;
-    push_to_tail(env, env_var);
+    push_to_tail(env, data);
     free(line);
     return EPI_SUCCESS;
 }

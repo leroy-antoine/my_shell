@@ -11,9 +11,9 @@
 
 int move_left(index_t *ind)
 {
-    if (ind->move_index <= 0)
+    if (ind->index <= 0)
         return SUCCESS;
     write(1, MOVE_LEFT, 3);
-    ind->move_index--;
+    ind->index--;
     return SUCCESS;
 }

@@ -21,8 +21,7 @@ void kick_out_list(system_t *sys)
     tmp = sys->jobs->head;
     if (tmp != NULL)
         tmp = tmp->next;
-    free_jobs(sys->jobs->head->data);
-    sys->jobs->head = tmp;
+    delete_node(sys->jobs, sys->jobs->head, free_jobs);
 }
 
 static bool check_fg(system_t *sys, char **commands)
@@ -30,15 +29,15 @@ static bool check_fg(system_t *sys, char **commands)
     if (sys == NULL || commands == NULL)
         return true;
     if ((sys->jobs->head) == NULL) {
-        dprintf(2, "fg: No current job.\n");
+        dprintf(STDERR_FILENO, "fg: No current job.\n");
         return true;
     }
     if (sys->jobs->head->data == NULL) {
-        dprintf(2, "fg: No current job.\n");
+        dprintf(STDERR_FILENO, "fg: No current job.\n");
         return true;
     }
     if (array_len(commands) != 1 && strcmp(commands[0], "fg") != 0) {
-        dprintf(2, "fg: Wrong usage of fg\n");
+        dprintf(STDERR_FILENO, "fg: Wrong usage of fg\n");
         return true;
     }
     return false;
@@ -47,12 +46,12 @@ static bool check_fg(system_t *sys, char **commands)
 static void print_fg_message(char **command_line)
 {
     if (command_line == NULL) {
-    dprintf(2, "ERROR : NULL COMMAND LINE\n");
+    dprintf(STDERR_FILENO, "ERROR : NULL COMMAND LINE\n");
     return;
     }
     for (size_t i = 0; command_line[i] != NULL; i++)
-        dprintf(1, "%s ", command_line[i]);
-    dprintf(1, "\n");
+        dprintf(STDOUT_FILENO, "%s ", command_line[i]);
+    dprintf(STDOUT_FILENO, "\n");
 }
 
 static void continue_job(system_t *sys, pid_t pid, char **command_line)
@@ -82,8 +81,7 @@ static void continue_proper_pid(pid_t id, linked_list_t *jobs, long int ID,
         data = tmp->next->data;
         if (tmp->next != NULL && data->ID == ID) {
             continue_job(sys, data->pid, data->command_line);
-            free_jobs(tmp->next->data);
-            tmp->next = tmp->next->next;
+            delete_node(jobs, tmp, free_jobs);
             return;
         }
         tmp = tmp->next;
@@ -98,8 +96,10 @@ static void push_id_to_front(system_t *sys, char **command)
     long int num = 0;
 
     num = strtol(command[1], &endptr, DECIMAL_BASE);
-    if (*endptr != '\0')
-        dprintf(2, "fg: No such job.\n");
+    if (*endptr != '\0') {
+        dprintf(STDERR_FILENO, "fg: No such job.\n");
+        return;
+    }
     while (tmp != NULL) {
         if (data->ID == num)
             return continue_proper_pid(data->pid,
@@ -108,7 +108,7 @@ static void push_id_to_front(system_t *sys, char **command)
         if (tmp != NULL)
             data = tmp->data;
     }
-    dprintf(2, "fg: No such job.\n");
+    dprintf(STDERR_FILENO, "fg: No such job.\n");
 }
 
 void do_fg(system_t *sys, char **command_line)

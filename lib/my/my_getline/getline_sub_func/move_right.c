@@ -12,10 +12,9 @@
 
 int move_right(index_t *ind)
 {
-    if (ind->buf[ind->move_index] == ' ' ||
-        ind->buf[ind->move_index] == '\0')
+    if (ind->buf[ind->index] == '\0')
         return SUCCESS;
     write(1, MOVE_RIGHT, 3);
-    ind->move_index++;
+    ind->index++;
     return SUCCESS;
 }

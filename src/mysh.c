@@ -52,7 +52,8 @@ void shell_loop(char *command, char **args, prompt_t *variables, system_t *sys)
             variables->status = COMMAND_ERROR;
             continue;
         }
-        variables->status = exec_proper_function(args, sys, variables->status);
+        variables->status = exec_proper_function(
+            dup_list(args), sys, variables->status);
         free_list(args);
         args = NULL;
         if (sys->has_exited == true)

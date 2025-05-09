@@ -13,17 +13,6 @@
 #include "formatsh.h"
 #include "my.h"
 
-static int format_tab_cmd(char ***args, system_t *sys)
-{
-    check_alias(args, sys->alias);
-    if (*args == NULL)
-        return EPI_ERROR;
-    if (replace_wave(*args, sys->env) == COMMAND_ERROR ||
-        handle_star(args) == EPI_ERROR)
-        return COMMAND_ERROR;
-    return EPI_SUCCESS;
-}
-
 static char **get_tab(char **args)
 {
     int i = 0;
@@ -37,7 +26,7 @@ static char **get_tab(char **args)
         }
         i++;
     } else if (j != 1) {
-        dprintf(2, "%s", str_message[FOREACH_NOT_PAR]);
+        dprintf(STDERR_FILENO, "%s", str_message[FOREACH_NOT_PAR]);
         return NULL;
     }
     tab = dup_list_ij(args, i, j);
@@ -72,7 +61,7 @@ static int get_cmd(linked_list_t *list)
     }
     free(cmd);
     if (exit == EOF) {
-        dprintf(2, "%s", str_message[FOREACH_NO_END]);
+        dprintf(STDERR_FILENO, "%s", str_message[FOREACH_NO_END]);
         return COMMAND_ERROR;
     }
     return SUCCESS;
@@ -103,13 +92,12 @@ static int exec_foreach_cmd(char **tab, char *value, system_t *sys, char *var)
 
     if (change_var(tab, value, var) == EPI_ERROR)
         return EPI_ERROR;
-    status = format_tab_cmd(&tab, sys);
+    status = format_scripting(&tab, sys);
     if (status != EXIT_SUCCESS) {
         free_list(tab);
         return status;
     }
     status = exec_proper_function(tab, sys, status);
-    free_list(tab);
     return status;
 }
 
@@ -144,12 +132,15 @@ int do_foreach(char **args, system_t *sys)
     if (list == NULL)
         return EPI_ERROR;
     if (args[1] == NULL || args[2] == NULL) {
-        dprintf(2, "%s", str_message[FOREACH_TOO_FEW]);
+        dprintf(STDERR_FILENO, "%s", str_message[FOREACH_TOO_FEW]);
+        free_linked_list(list, &free_script_cmd);
         return COMMAND_ERROR;
     }
     tab = get_tab(args + 2);
-    if (tab == NULL)
+    if (tab == NULL) {
+        free_linked_list(list, &free_script_cmd);
         return COMMAND_ERROR;
+    }
     check = get_cmd(list);
     if (check != SUCCESS)
         return check;

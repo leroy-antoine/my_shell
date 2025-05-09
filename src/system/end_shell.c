@@ -24,8 +24,10 @@ static int free_all(char *command,
     free(variable->hostname);
     if (sys->prompt != NULL)
         free(sys->prompt);
-    free_linked_list(sys->env, free_env_var);
-    free_linked_list(sys->alias, free_alias_var);
+    free_linked_list(sys->env, &free_env_var);
+    free_linked_list(sys->alias, &free_alias_var);
+    free_linked_list(sys->var, &free_var);
+    free_linked_list(sys->jobs, &free_jobs);
     return EPI_SUCCESS;
 }
 

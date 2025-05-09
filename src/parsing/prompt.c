@@ -14,6 +14,15 @@
 #include "mysh.h"
 #include "formatsh.h"
 
+static int write_wave(int len, char *wd)
+{
+    if (len == 0)
+        return dprintf(STDOUT_FILENO,
+            "%s%s>", str_term_caps[MAGENTA], wd) + 1;
+    return dprintf(STDOUT_FILENO,
+            "%s~%s>", str_term_caps[MAGENTA], wd) + 1;
+}
+
 static int write_path(char *home, system_t *sys)
 {
     char *wd = getcwd(NULL, PATH_MAX_LEN);
@@ -27,8 +36,7 @@ static int write_path(char *home, system_t *sys)
             len = 0;
         free(home);
     }
-    sys->prompt = malloc(sizeof(char) * (dprintf(STDOUT_FILENO,
-        "%s~%s>", str_term_caps[MAGENTA], wd) + 1));
+    sys->prompt = malloc(sizeof(char) * write_wave(len, wd));
     if (sys->prompt == NULL)
         return ERROR;
     sprintf(sys->prompt, "%s~%s>", str_term_caps[MAGENTA], wd);

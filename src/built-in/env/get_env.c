@@ -13,7 +13,7 @@
 linked_list_t *get_env(char **env)
 {
     linked_list_t *list = initialize_linked_list();
-    env_var_t *env_var = NULL;
+    char *env_var = NULL;
 
     if (list == NULL)
         return NULL;

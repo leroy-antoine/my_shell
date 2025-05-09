@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
+  </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="shell_pro" targetName="42sh" />
+      <config projectName="shell_pro" targetName="re" />
+      <config projectName="shell_pro" targetName="uni_clean" />
+      <config projectName="shell_pro" targetName="tests" />
+      <config projectName="shell_pro" targetName="fclean" />
+      <config projectName="shell_pro" targetName="tester" />
+      <config projectName="shell_pro" targetName="update" />
+      <config projectName="shell_pro" targetName="debug" />
+      <config projectName="shell_pro" targetName="tests_run" />
+      <config projectName="shell_pro" targetName="all" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1f68193d-4575-4e83-80d4-ec94fc831d93" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/formatsh.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/formatsh.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/my.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/my.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/mysh.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/mysh.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/linked_list/free_linked_list.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/linked_list/free_linked_list.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/linked_list/sort_linked_list.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/linked_list/sort_linked_list.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/array.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/array.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_add_letter.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_add_letter.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_ctrl_d.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_ctrl_d.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_del.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_del.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_new_line.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/exec_sub_func/exec_new_line.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_down.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_down.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_left.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_left.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_right.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_right.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_up.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/getline_sub_func/move_up.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/init_getline.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/init_getline.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/my_getline.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/my_getline.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/prompt/del_line.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my/my_getline/prompt/del_line.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my/my_getline/prompt/prompt_handeling.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/check_alias.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/copy_myshrc.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/create_alias_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/del_alias_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/do_alias.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/do_unalias.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/free_alias_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/get_alias.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/alias/sort_alias_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/cd/do_cd.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/create_env_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/do_env.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/do_setenv.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/do_unsetenv.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/env_to_list.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/free_env_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/get_env.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/get_env_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/env/is_env_var.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/exit/do_exit.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/history/add_to_history.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/history/do_history.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/history/free_history_cmd.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/history/get_history.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/history/save_history.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/scripting/create_script_cmd.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/scripting/do_foreach.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/scripting/do_repeat.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/scripting/do_where.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/scripting/do_which.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/built-in/scripting/free_script_cmd.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execution/do_existing_command.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execution/exec_command.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execution/exec_command_no_fork.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execution/exec_operator.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execution/exec_proper_function.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jobs/do_background.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jobs/do_fg.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jobs/do_jobs.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jobs/free_jobs.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jobs/init_jobs.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jobs/print_jobs.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysh.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/error_branch.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_and.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_l.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_ll.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_or.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_pipe.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_r.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_rr.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/exec_rr_r.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/check_operators.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/check_tree.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/format_cmd.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/get_input.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/make_tree.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/prompt.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/star.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/wave.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parsing/which_path.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signals/create_handler.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signals/do_ctrl_c.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signals/do_ctrl_z.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signals/do_kill.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signals/handle_ctrl_c.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signals/handle_signals.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signals/is_signal.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/system/end_shell.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/system/initialize_system.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/archi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/cmp.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/core" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/floating_point" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/my_pipe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tester/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tester/tester.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tests" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_and_or1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_and_or2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_and_or3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_and_or4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_cd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_cd2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_cd_not_dir" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_cmd_not_exist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_directory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_repeat_nan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_repeat_no_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_repeat_one_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_where_no_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_where_not_here" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_where_path" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_which_no_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_do_which_not_here" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_error_and" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_exit_nan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_exit_two_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_floating_point" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_foreach_no_args" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_foreach_no_end" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_foreach_one_args" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_foreach_too_much_args" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_invalid_and" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_invalid_or" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_lot_and" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_lot_or" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_missing_quote" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_pipe_no_arg_after" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_pipe_no_arg_before" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_double_in_no_arg_after" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_double_in_no_arg_before" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_double_out_no_arg_after" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_double_out_no_arg_before" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_simple_in_no_arg_after" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_simple_in_no_arg_before" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_simple_in_not_exist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_simple_out_no_arg_after" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_redirect_simple_out_no_arg_before" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_setenv_firts_letter" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_setenv_midle_letter" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_setenv_three_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_simple_cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_star_no_match" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_unalias_no_argument" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/ERROR_unsetenv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/FAIL_exec_alias_alias_call_alias" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_alias_change_value" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_alias_no_argument" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_alias_one_argument" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_alias_three_argument" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_alias_two_argument" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_and_or1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_and_or2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_and_or3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_cd_dir" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_cd_old" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_cd_simple" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_cd_wave" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_cd_wave_user" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_do_history" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_do_where" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_do_which" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_do_which_binary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_exec_alias" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_exit_no_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_exit_one_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_foreach" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_lot_and" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_lot_or" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_pipe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_pipe_builtin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_redirect_double_in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_redirect_double_out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_redirect_simple_in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_redirect_simple_out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_repeat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_semicolon" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_setenv_no_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_setenv_one_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_setenv_two_arg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_simple_cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_star1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_star2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_unalias_two_argument" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_unsetenv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_valid_and" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/SUCCESS_valid_or" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unitest/test_42sh.c" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;leroy-antoine&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:leroy-antoine/my_shell.git&quot;,
+    &quot;accountId&quot;: &quot;25c3bd05-68b6-49a5-8e64-a82c38edc41e&quot;
+  }
+}</component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="shell_pro" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="shell_pro" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2024" />
+    <option name="minorVersion" value="3.5" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2vXKpQbDDBRdFMqMoLmZJwaUiR3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/antoine/bscorewar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Native Application.all">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="42sh" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="42sh" CONFIG_NAME="42sh" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="all" CONFIG_NAME="all" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="debug" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="debug" CONFIG_NAME="debug" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="fclean" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="fclean" CONFIG_NAME="fclean" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="re" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="re" CONFIG_NAME="re" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tester" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="tester" CONFIG_NAME="tester" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tests" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="tests" CONFIG_NAME="tests" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tests_run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="tests_run" CONFIG_NAME="tests_run" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="uni_clean" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="uni_clean" CONFIG_NAME="uni_clean" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="update" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="shell_pro" TARGET_NAME="update" CONFIG_NAME="update" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Native Application.all" />
+      <item itemvalue="Native Application.debug" />
+      <item itemvalue="Native Application.fclean" />
+      <item itemvalue="Native Application.re" />
+      <item itemvalue="Native Application.tester" />
+      <item itemvalue="Native Application.tests" />
+      <item itemvalue="Native Application.uni_clean" />
+      <item itemvalue="Native Application.42sh" />
+      <item itemvalue="Native Application.tests_run" />
+      <item itemvalue="Native Application.update" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1f68193d-4575-4e83-80d4-ec94fc831d93" name="Changes" comment="" />
+      <created>1744286160929</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744286160929</updated>
+      <workItem from="1744286162117" duration="181000" />
+      <workItem from="1744733486337" duration="3317000" />
+      <workItem from="1744737896908" duration="10000" />
+      <workItem from="1744737926188" duration="2000" />
+      <workItem from="1744738072809" duration="5000" />
+      <workItem from="1744804813569" duration="91000" />
+      <workItem from="1744816485500" duration="2234000" />
+      <workItem from="1744904277228" duration="2802000" />
+      <workItem from="1744967483038" duration="2035000" />
+      <workItem from="1745241733274" duration="762000" />
+      <workItem from="1745243097649" duration="258000" />
+      <workItem from="1745243703575" duration="374000" />
+      <workItem from="1745321811788" duration="114000" />
+      <workItem from="1745329376487" duration="94000" />
+      <workItem from="1745857551859" duration="307000" />
+      <workItem from="1746805358973" duration="34000" />
+      <workItem from="1746805404363" duration="547000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

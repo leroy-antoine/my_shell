@@ -49,8 +49,16 @@ SRC = 	$(addprefix src/, 					\
 		built-in/scripting/do_where.c 		\
 		built-in/scripting/do_repeat.c 		\
 		built-in/scripting/do_foreach.c 	\
+		built-in/scripting/do_if.c 			\
+		built-in/scripting/get_condition.c 	\
+		built-in/scripting/format_scripting.c 	\
 		built-in/scripting/create_script_cmd.c	\
 		built-in/scripting/free_script_cmd.c	\
+		built-in/variables/create_var.c		\
+		built-in/variables/free_var.c		\
+		built-in/variables/do_set.c			\
+		built-in/variables/do_unset.c		\
+		built-in/variables/sort_var.c		\
 		\
 		parsing/which_path.c				\
 		parsing/make_tree.c					\
@@ -60,7 +68,10 @@ SRC = 	$(addprefix src/, 					\
 		parsing/format_cmd.c				\
 		parsing/wave.c 	                    \
 		parsing/star.c 	                    \
+		parsing/question_mark.c 	        \
 		parsing/prompt.c 	                \
+		parsing/var.c 	                	\
+		parsing/free_tree.c 				\
 		\
 		operators/exec_rr_r.c				\
 		operators/error_branch.c			\
@@ -85,13 +96,13 @@ SRC = 	$(addprefix src/, 					\
 		jobs/print_jobs.c					\
 		jobs/do_jobs.c						\
 		\
-		signals//handle_signals.c						\
-		signals/do_ctrl_z.c								\
-		signals/create_handler.c						\
-		signals/is_signal.c								\
-		signals/do_kill.c								\
-		signals/handle_ctrl_c.c							\
-		signals/do_ctrl_c.c								\
+		signals//handle_signals.c			\
+		signals/do_ctrl_z.c					\
+		signals/create_handler.c			\
+		signals/is_signal.c					\
+		signals/do_kill.c					\
+		signals/handle_ctrl_c.c				\
+		signals/do_ctrl_c.c					\
     )
 
 OBJ = $(SRC:.c=.o) $(MAIN:.c=.o)

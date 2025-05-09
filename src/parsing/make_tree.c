@@ -9,13 +9,16 @@
 #include <string.h>
 #include "mysh.h"
 #include "my.h"
+#include "formatsh.h"
 
 static void change_type(char **command,
     size_t i, redirection_t *redirection)
 {
     for (size_t j = 0; j < ARRAY_SIZE(redirection_list); j++)
         if (redirection_list[j].priority > redirection->priority
-            && strcmp(command[i], redirection_list[j].string) == 0)
+            && strcmp(command[i], redirection_list[j].string) == 0
+            && is_between_list(command, i, str_management[OPEN_PARE],
+            str_management[CLOSE_PARE]) == false)
             *redirection = redirection_list[j];
 }
 
@@ -32,7 +35,9 @@ static int is_delim(char **command, type_t redir, int index)
 {
     for (int i = 0; command[i] != NULL; i++)
         if (redirection_list[index].redirection == redir &&
-            strcmp(command[i], redirection_list[index].string) == 0)
+            strcmp(command[i], redirection_list[index].string) == 0
+            && is_between_list(command, i, str_management[OPEN_PARE],
+            str_management[CLOSE_PARE]) == false)
             return i;
     return -1;
 }
