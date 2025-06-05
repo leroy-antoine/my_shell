@@ -29,5 +29,7 @@ system_t *initialize_system(char **env)
     system->has_exited = false;
     system->prompt = NULL;
     system->var = var;
+    system->input = NULL;
+    system->user = NULL;
     return system;
 }

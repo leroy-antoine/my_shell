@@ -63,8 +63,7 @@ static int return_vars(index_t *ind, char **buff, size_t *len)
 static int my_return_value(index_t *ind, int value)
 {
     if (ind != NULL) {
-        if (ind->buf != NULL)
-            free(ind->buf);
+        free(ind->buf);
         free(ind);
     }
     return value;

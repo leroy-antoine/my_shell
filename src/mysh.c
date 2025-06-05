@@ -26,11 +26,12 @@ static int change_old_pwd(linked_list_t *env)
     return EPI_SUCCESS;
 }
 
-void init_prompt(prompt_t *variable, linked_list_t *env)
+void init_prompt(prompt_t *variable, system_t *sys)
 {
     int len = 0;
 
-    variable->user = get_env_var(env, str_env[USER_VAR]);
+    variable->user = get_env_var(sys->env, str_env[USER_VAR]);
+    sys->user = variable->user;
     variable->hostname = open_file(str_env[HOSTNAME]);
     if (variable->hostname != NULL) {
         len = strlen(variable->hostname);
@@ -52,8 +53,9 @@ void shell_loop(char *command, char **args, prompt_t *variables, system_t *sys)
             variables->status = COMMAND_ERROR;
             continue;
         }
-        variables->status = exec_proper_function(
-            dup_list(args), sys, variables->status);
+        variables->status = exec_proper_function(dup_list(args),
+            sys, variables->status);
+        free(sys->input);
         free_list(args);
         args = NULL;
         if (sys->has_exited == true)
@@ -69,7 +71,7 @@ int mysh(system_t *sys)
     char **args = NULL;
     prompt_t variables = {NULL};
 
-    init_prompt(&variables, sys->env);
+    init_prompt(&variables, sys);
     if (sys->env == NULL || change_old_pwd(sys->env) == EPI_ERROR)
         return EPI_ERROR;
     shell_loop(command, args, &variables, sys);

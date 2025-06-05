@@ -21,7 +21,8 @@ void kick_out_list(system_t *sys)
     tmp = sys->jobs->head;
     if (tmp != NULL)
         tmp = tmp->next;
-    delete_node(sys->jobs, sys->jobs->head, free_jobs);
+    free_jobs(sys->jobs->head->data);
+    sys->jobs->head = tmp;
 }
 
 static bool check_fg(system_t *sys, char **commands)
@@ -81,7 +82,8 @@ static void continue_proper_pid(pid_t id, linked_list_t *jobs, long int ID,
         data = tmp->next->data;
         if (tmp->next != NULL && data->ID == ID) {
             continue_job(sys, data->pid, data->command_line);
-            delete_node(jobs, tmp, free_jobs);
+            free_jobs(tmp->next->data);
+            tmp->next = tmp->next->next;
             return;
         }
         tmp = tmp->next;

@@ -50,11 +50,18 @@ SRC =	my_str_to_word_array.c							\
 		my_getline/getline_sub_func/get_arrow.c   		\
 		my_getline/init_getline.c              			\
 		my_getline/getline_sub_func/is_ctrl_d.c			\
-		my_getline/prompt/prompt_handling.c			\
+		my_getline/prompt/prompt_handling.c				\
 		my_getline/prompt/del_line.c    				\
 		my_getline/exec_sub_func/exec_ctrl_d.c			\
 		my_getline/getline_sub_func/is_ctrl_l.c			\
 		my_getline/exec_sub_func/exec_ctrl_l.c 			\
+		my_getline/prompt/write_wave.c					\
+		my_getline/prompt/write_git.c					\
+		my_getline/prompt/write_time.c					\
+		my_getline/prompt/write_path.c					\
+		my_getline/prompt/write_hostname.c				\
+		my_getline/prompt/write_nb.c      				\
+		my_getline/prompt/write_user.c					\
 
 OBJ = $(SRC:.c=.o)
 

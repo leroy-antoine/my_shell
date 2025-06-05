@@ -120,6 +120,14 @@ typedef enum {
     ENDIF,
     THEN,
     THEN_NO_END,
+    API_ERR,
+    API_PATH,
+    NO_API_SETUP,
+    MOD_ERR,
+    MOD_P,
+    KEY_P,
+    BAD_KEY,
+    PROMPT_P,
 } message_t;
 
 static const char *str_message[] __maybe_unused = {
@@ -174,7 +182,19 @@ static const char *str_message[] __maybe_unused = {
     [IF_PROMPT] = "if? ",
     [ENDIF] = "endif\n",
     [THEN] = "then",
-    [THEN_NO_END] = "then: then/endif not found.\n"
+    [THEN_NO_END] = "then: then/endif not found.\n",
+    [API_ERR] = "Error while sending request to OpenIA's API. "
+    "Check your connexion or the status of OpenIA's API\n",
+    [API_PATH] = "/home/%s/.config/42ia.conf",
+    [NO_API_SETUP] = "Error: No config file. "
+    "Please execute the command \"ai-setup\".\n.",
+    [MOD_ERR] = "Incorrect model. Please set a correct model from "
+    "https://platform.openai.com/docs/models and try again.\n",
+    [MOD_P] = "Please enter OpenIA model (Enter for default gpt-4.1) > ",
+    [KEY_P] = "Please your OpenIA api key > ",
+    [BAD_KEY] = "You need a correct OpenIA api Key. Try again.\n",
+    [PROMPT_P] = "Please enter your pre-prompt as single line "
+    "(Enter for default coding pre prompt) > ",
 };
 
 typedef enum {

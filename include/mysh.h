@@ -153,6 +153,8 @@ typedef struct system_s {
     history_t *history;
     bool has_exited;
     char *prompt;
+    char *input;
+    char *user;
 } system_t;
 
 /* index structure my_getline */
@@ -166,6 +168,9 @@ typedef struct index_s {
     history_t *history;
     node_t *current_cmd;
 } index_t;
+
+
+
 
 void free_tree(tree_t *head);
 void my_free_str(char **str);
@@ -271,7 +276,7 @@ typedef struct prompt {
     int status;
 } prompt_t;
 
-int prompt(prompt_t *variables, char *home, system_t *sys);
+int prompt(prompt_t *variables, system_t *sys);
 int exec_proper_function(char **args,
     system_t *sys, int return_value);
 int mysh(system_t *sys);
@@ -308,6 +313,8 @@ int do_where(char **args, system_t *sys);
 int do_repeat(char **args, system_t *sys);
 int do_foreach(char **args, system_t *sys);
 int do_if(char **args, system_t *sys);
+int do_ia(system_t *sys, char *input);
+int do_ia_setup(char **args, system_t *sys);
 linked_list_t *get_env(char **env);
 void free_env_var(void *data);
 char **env_to_list(linked_list_t *env);
@@ -351,6 +358,27 @@ tree_t *make_tree(char **command);
 /* my_getline */
 int my_getline(char *prompt, char **buff, size_t *len, history_t *history);
 
+int write_user(prompt_t *variables, system_t *sys);
+int write_nb(prompt_t *variables, system_t *sys);
+int write_hostname(prompt_t *variables, system_t *sys);
+int write_path(prompt_t *variables, system_t *sys);
+int write_git(prompt_t *variables, system_t *sys);
+int write_time(prompt_t *variables, system_t *sys);
+int write_wave(int len, char *wd);
+
+typedef struct custom_prompt {
+    char c;
+    int (*add_feat)(prompt_t *, system_t *);
+} custom_prompt_t;
+
+static const custom_prompt_t feat_prompt_tab[] = {
+    {'P', write_path},
+    {'H', write_hostname},
+    {'U', write_user},
+    {'R', write_nb},
+    {'G', write_git},
+    {'T', write_time},
+};
 
 typedef struct exec_command {
     const char *command;
@@ -374,6 +402,7 @@ static const exec_command_t commands[] = {
     {"set", &do_set},
     {"unset", &do_unset},
     {"if", &do_if},
+    {"ai-setup", &do_ia_setup},
 };
 
 /* letter allowed for fist env variable name */

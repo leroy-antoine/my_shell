@@ -107,10 +107,21 @@ static int check_tty(
             *stop_getline = EOF;
         }
     } else {
-        if (prompt(vars, get_env_var(
-            sys->env, str_env[HOME_VAR]), sys) == ERROR)
+        if (prompt(vars, sys) == ERROR)
             return ERROR;
         *stop_getline = my_getline(sys->prompt, command, &size, sys->history);
+    }
+    return SUCCESS;
+}
+
+static int get_input_tty(prompt_t *variables, system_t *sys, char **command)
+{
+    int stop_getline = 0;
+
+    if (check_tty(command, &stop_getline, sys, variables) == ERROR
+    || stop_getline == EOF || *command == NULL) {
+        free(*command);
+        return EPI_ERROR;
     }
     return SUCCESS;
 }
@@ -118,22 +129,21 @@ static int check_tty(
 int get_input(char **command,
     char ***args, prompt_t *variables, system_t *sys)
 {
-    char *tmp = NULL;
-    int stop_getline = 0;
     int return_value = 0;
 
-    if (check_tty(command, &stop_getline, sys, variables) == ERROR
-        || stop_getline == EOF || *command == NULL) {
-            free(*command);
-            return EPI_ERROR;
-        }
-    tmp = handle_var(format_cmd(*command), sys, &variables->status);
-    if (tmp == NULL)
+    if (get_input_tty(variables, sys, command) == EPI_ERROR)
+        return EPI_ERROR;
+    if (strncmp(*command, "%", 1) == 0) {
+        add_to_history(*command, sys->history);
+        sys->input = NULL;
+        return do_ia(sys, *command + 1);
+    }
+    sys->input = handle_var(format_cmd(*command), sys, &variables->status);
+    if (sys->input == NULL)
         return return_value;
-    *args = my_str_to_word_array(tmp, " \n\t", "\"\'");
+    *args = my_str_to_word_array(sys->input, " \n\t", "\"\'");
     if (*args == NULL)
         return is_command_error(variables);
-    free(tmp);
     free(*command);
     if (check_pare(*args) == COMMAND_ERROR)
         return is_command_error(variables);
