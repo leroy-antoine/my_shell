@@ -20,13 +20,13 @@ int write_hostname(prompt_t *variables, system_t *sys)
 
     if (variables->hostname == NULL)
         return SUCCESS;
-    print = dprintf(STDOUT_FILENO, "%s ✭ %s%s", str_term_caps[BLUE],
-            str_term_caps[YELLOW], variables->hostname);
+    print = dprintf(STDOUT_FILENO, "%s%s%s%s", str_term_caps[BLUE],
+            str_term_caps[YELLOW], variables->hostname, str_term_caps[RESET]);
     sys->prompt = realloc(sys->prompt,
         sizeof(char) * (print + strlen(sys->prompt) + 1));
     if (sys->prompt == NULL)
         return ERROR;
-    sprintf(sys->prompt, "%s%s ✭ %s%s", sys->prompt, str_term_caps[BLUE],
-            str_term_caps[YELLOW], variables->hostname);
+    sprintf(sys->prompt, "%s%s%s%s%s", sys->prompt, str_term_caps[BLUE],
+            str_term_caps[YELLOW], variables->hostname, str_term_caps[RESET]);
     return SUCCESS;
 }

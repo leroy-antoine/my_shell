@@ -34,6 +34,10 @@ Navigate to the project directory:
 
 Build the project:
 
+/!\ Firstly, run:
+
+    make install
+
 To build the shell, simply run:
 
     make

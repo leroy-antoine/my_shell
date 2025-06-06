@@ -23,14 +23,14 @@ int write_user(prompt_t *variables, system_t *sys)
         if (variables->user == NULL)
             return ERROR;
     }
-    print = dprintf(STDOUT_FILENO, "%s - %s%s➤ %s",
+    print = dprintf(STDOUT_FILENO, "%s%s%s%s",
         str_term_caps[RESET], str_term_caps[CYAN],
         variables->user, str_term_caps[RESET]);
     sys->prompt = realloc(sys->prompt,
         sizeof(char) * (print + strlen(sys->prompt) + 1));
     if (sys->prompt == NULL)
         return ERROR;
-    sprintf(sys->prompt, "%s%s - %s%s➤ %s",
+    sprintf(sys->prompt, "%s%s%s%s%s",
         sys->prompt, str_term_caps[RESET], str_term_caps[CYAN],
         variables->user, str_term_caps[RESET]);
     return SUCCESS;

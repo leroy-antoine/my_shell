@@ -62,6 +62,8 @@ SRC =	my_str_to_word_array.c							\
 		my_getline/prompt/write_hostname.c				\
 		my_getline/prompt/write_nb.c      				\
 		my_getline/prompt/write_user.c					\
+		my_getline/prompt/write_jump_line.c				\
+		my_getline/prompt/write_char.c					\
 
 OBJ = $(SRC:.c=.o)
 

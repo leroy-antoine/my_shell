@@ -155,6 +155,7 @@ typedef struct system_s {
     char *prompt;
     char *input;
     char *user;
+    char *pathshrc;
 } system_t;
 
 /* index structure my_getline */
@@ -271,9 +272,11 @@ static const redirection_t redirection_list[] = {
 };
 
 typedef struct prompt {
+    char *params;
     char *user;
     char *hostname;
     int status;
+    char ch;
 } prompt_t;
 
 int prompt(prompt_t *variables, system_t *sys);
@@ -365,6 +368,8 @@ int write_path(prompt_t *variables, system_t *sys);
 int write_git(prompt_t *variables, system_t *sys);
 int write_time(prompt_t *variables, system_t *sys);
 int write_wave(int len, char *wd);
+int write_jump_line(prompt_t *variables, system_t *sys);
+int write_char(prompt_t *variables, system_t *sys);
 
 typedef struct custom_prompt {
     char c;
@@ -378,6 +383,7 @@ static const custom_prompt_t feat_prompt_tab[] = {
     {'R', write_nb},
     {'G', write_git},
     {'T', write_time},
+    {'N', write_jump_line},
 };
 
 typedef struct exec_command {

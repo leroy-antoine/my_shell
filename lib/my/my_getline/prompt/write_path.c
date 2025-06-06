@@ -31,7 +31,7 @@ int write_path(prompt_t __maybe_unused *variables, system_t *sys)
     sys->prompt = malloc(sizeof(char) * write_wave(len, wd));
     if (sys->prompt == NULL)
         return ERROR;
-    sprintf(sys->prompt, "%s~%s", str_term_caps[MAGENTA], wd);
+    sprintf(sys->prompt, "%s~%s>", str_term_caps[MAGENTA], wd);
     if (len != 0)
         wd -= len;
     free(wd);

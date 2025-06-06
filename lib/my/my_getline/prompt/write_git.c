@@ -46,11 +46,11 @@ int write_git(prompt_t __maybe_unused *variables, system_t *sys)
     int slash_index = last_slash(branch) + 1;
 
     if (branch[0] != '\0') {
-        print = dprintf(STDOUT_FILENO, "on %s%s%s", str_term_caps[RED],
+        print = dprintf(STDOUT_FILENO, "%son %s%s", str_term_caps[RED],
             branch + slash_index, str_term_caps[RESET]);
         sys->prompt = realloc(sys->prompt,
             sizeof(char) * (print + strlen(sys->prompt) + 1));
-        sprintf(sys->prompt, "%son %s%s%s", sys->prompt, str_term_caps[RED],
+        sprintf(sys->prompt, "%s%son %s%s", sys->prompt, str_term_caps[RED],
             branch + slash_index, str_term_caps[RESET]);
     }
     return SUCCESS;
